@@ -17,8 +17,7 @@ server <- function(id, book_titles, book_url_images) {
     
     
     output$select_books_ui_output <- renderUI({
-      #print(ns("select_books_input_container"))
-      div(
+      res <- div(
         class = "select_books_input_container",
         virtualSelectInput(
           ns("select_books_input"),
@@ -36,7 +35,8 @@ server <- function(id, book_titles, book_url_images) {
           html = TRUE
         )
       )
-    })
+      res
+    }) 
 
     return(reactive({input$select_books_input}))
   })

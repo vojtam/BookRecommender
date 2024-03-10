@@ -4,11 +4,18 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://packagemanager.posit.co/cran/latest"
+        "URL": "http://cran.rstudio.com"
       }
     ]
   },
   "Packages": {
+    "BH": {
+      "Package": "BH",
+      "Version": "1.84.0-0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a8235afbcd6316e6e91433ea47661013"
+    },
     "R.cache": {
       "Package": "R.cache",
       "Version": "0.16.0",
@@ -83,6 +90,18 @@
         "utils"
       ],
       "Hash": "5ea2700d21e038ace58269ecdbeb9ec0"
+    },
+    "anytime": {
+      "Package": "anytime",
+      "Version": "0.3.9",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "BH",
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "74a64813f17b492da9c6afda6b128e3d"
     },
     "backports": {
       "Package": "backports",
@@ -806,6 +825,24 @@
       ],
       "Hash": "3a1f41807d648a908e3c7f0334bf85e6"
     },
+    "shinyWidgets": {
+      "Package": "shinyWidgets",
+      "Version": "0.8.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "anytime",
+        "bslib",
+        "grDevices",
+        "htmltools",
+        "jsonlite",
+        "rlang",
+        "sass",
+        "shiny"
+      ],
+      "Hash": "88289640c8206dc810ea9cb87bd58ffc"
+    },
     "sourcetools": {
       "Package": "sourcetools",
       "Version": "0.1.7-1",
@@ -906,6 +943,22 @@
         "rlang"
       ],
       "Hash": "c03fa420630029418f7e6da3667aac4a"
+    },
+    "waiter": {
+      "Package": "waiter",
+      "Version": "0.2.5.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "waiter",
+      "RemoteUsername": "JohnCoene",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "6e087aa3b19e0bc3075acd85251318cb83197e2c",
+      "Requirements": [
+        "htmltools",
+        "shiny"
+      ],
+      "Hash": "3f9cdb961d84fa496ae8a6108a6c459d"
     },
     "waldo": {
       "Package": "waldo",
