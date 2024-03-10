@@ -1,12 +1,15 @@
 box::use(
   utils[head],
-  shiny[div, moduleServer, NS, selectizeInput, updateSelectizeInput, renderUI, HTML, tags, uiOutput],
-  bslib[page_fillable, layout_columns, card, card_header, card_body],
-  shinyWidgets[pickerInput, virtualSelectInput],
+  shiny[div, moduleServer, actionButton, observeEvent, h1, p, NS, selectizeInput,  HTML, tags],
+  bslib[page_fillable, nav_panel, page_navbar, page_sidebar, layout_columns, card, card_header, card_body],
+
+)
+
+box::use(
+  view/mod_search_books
 )
 
 
-data <- data.table::fread("data/dataset_goodreads_filtered.csv")
 
 
 #' @export
@@ -14,39 +17,25 @@ ui <- function(id) {
   ns <- NS(id)
   page_fillable(
     title = "Book Recommender",
-    layout_columns(
-      card(
-        card_header(
-          class = "bg-dark",
-          "Select your favorite books"
-        ),
-        height = 200,
-        card_body(
-          virtualSelectInput(
-            "test",
-            "Select books",
-            choices = list(label=sprintf("<div class=\"booksearch\" >
-                                            <img class=\"booksearch__img\" src=\"%s\"/>
-                                            <span class=\"booksearch__title\">%s</span>
-                                         </div>", data$image_url, data$title),
-                           value=data$title) |> purrr::transpose(),
-            multiple = TRUE,
-            noOfDisplayValues = 10,
-            search = TRUE,
-            width = "100vw",
-            showValueAsTags = TRUE,
-            html = TRUE
-          )
-        )
-      )
+    tags$main(
+      class = "main-container",
+      h1("Discover books you will adore!", class = "align-text-center"),
+      div(class = "text-main align-text-center", p(" Enter books you like and the site will analyse the contents of the books to provide book recommendations and suggestions for what to read next.")),
+      mod_search_books$ui(ns("search_books")),
+      actionButton("get_recommend_btn", "Get Recommendations")
     )
+
   )
 }
 
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-   
+    data <- data.table::fread("data/dataset_goodreads_filtered.csv")
+    
+    selected_books_titles <- mod_search_books$server("search_books", data$title, data$image_url)
+    
+    
   })
 }
 
