@@ -3,7 +3,7 @@ box::use(
   shiny[div, moduleServer, tagList, actionButton, observeEvent, h1, h3, p, NS, selectizeInput,  HTML, tags],
   bslib[page_fillable, nav_panel, page_navbar, page_sidebar, layout_columns, card, card_header, card_body],
   waiter[useWaiter, autoWaiter, waiter_show, spin_fading_circles, waiter_hide, waiterShowOnLoad, waiter_on_busy],
-
+  spacyr[spacy_install],
 )
 
 box::use(
@@ -35,7 +35,7 @@ server <- function(id) {
   moduleServer(id, function(input, output, session) {
     data <- data.table::fread("data/dataset_goodreads_filtered.csv")
     
-    
+    spacy_install()
     selected_books_titles <- mod_search_books$server("search_books", data$title, data$image_url)
     
   })
