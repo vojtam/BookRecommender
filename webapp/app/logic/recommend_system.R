@@ -1,5 +1,7 @@
 box::use(
-  quanteda[corpus, docnames, dfm, convert, dfm_tfidf],
+  quanteda[corpus, docnames, dfm, convert, dfm_tfidf, dfm_subset],
+  quanteda.textstats[textstat_simil],
+  utils[head],
   spacyr[spacy_parse],
   dplyr[mutate, filter],
 )
@@ -29,10 +31,36 @@ spacy_pipeline <- function(corp) {
   
   corp_dfm <- res_tokens |> dfm()
   
-  #corp_dfm_dt <- corp_dfm |> convert(to = "data.frame")
+  saveRDS(corp_dfm, "./data/ref_corp_dfm.rds")
+  
   
   corp_tfidf <- corp_dfm |> dfm_tfidf()
   
-  write.csv2(corp_dfm_dt, file = "data/corpus_dfm.csv")
-  
+  saveRDS(corp_tfidf, "./data/ref_corp_tfidf.rds")
 }
+
+
+get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "ejaccard") {
+  query_dfm <- dfm_subset(corp_dfm, docname_ %in% query_book_titles)
+  
+  tstat <- textstat_simil(
+    query_dfm, corp_dfm,
+    margin = "documents",
+    method = simil_method
+  )
+  
+  stat_list <- as.list(tstat)
+  ordered <- sort(unlist(stat_list), decreasing = TRUE)
+  top_ten <- head(ordered, n = 10)
+  names(top_ten) <- names(top_ten) |> gsub(pattern = "\\..*$", replacement = "")
+  return(names(top_ten))
+}
+
+# hp3 <- dfm_subset(corp_dfm, docname_ %in% "A Game of Thrones (A Song of Ice and Fire, #1)")
+# tstat <- textstat_simil(hp3, corp_dfm,
+#                         margin = "documents", method = "ejaccard")
+# stat_list <- as.list(tstat)
+# ordered <- sort(unlist(stat_list), decreasing = TRUE)
+# top_ten <- head(ordered, n = 10)
+# names(top_ten) <- names(top_ten) |> gsub(pattern = "\\..*$", replacement = "")
+# top_ten

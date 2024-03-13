@@ -7,7 +7,8 @@ box::use(
 )
 
 box::use(
-  view/mod_search_books
+  view/mod_search_books,
+  view/mod_recommend_books,
 )
 
 
@@ -24,7 +25,8 @@ ui <- function(id) {
       h1("Discover books you will adore!", class = "align-text-center"),
       div(class = "text-main align-text-center", p(" Enter books you like and the site will analyse the contents of the books to provide book recommendations and suggestions for what to read next.")),
       mod_search_books$ui(ns("search_books")),
-      actionButton("get_recommend_btn", "Get Recommendations")
+      mod_recommend_books$ui(ns("recommend_books"))
+
     )
 
   )
@@ -34,9 +36,11 @@ ui <- function(id) {
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
     data <- data.table::fread("data/dataset_goodreads_filtered.csv")
-    
-    spacy_install()
+    corp_dfm <- readRDS("data/ref_corp_dfm.rds")
+    #spacy_install()
     selected_books_titles <- mod_search_books$server("search_books", data$title, data$image_url)
+    
+    mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles)
     
   })
 }

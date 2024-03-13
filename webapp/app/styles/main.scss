@@ -45,6 +45,13 @@
 }
 
 
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .main-container {
   height: 70%;
   display: flex;
