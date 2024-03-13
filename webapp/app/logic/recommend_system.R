@@ -3,7 +3,7 @@ box::use(
   quanteda.textstats[textstat_simil],
   utils[head],
   spacyr[spacy_parse],
-  dplyr[mutate, filter],
+  dplyr[mutate, filter, select],
 )
 
 
@@ -39,7 +39,7 @@ spacy_pipeline <- function(corp) {
   saveRDS(corp_tfidf, "./data/ref_corp_tfidf.rds")
 }
 
-
+#' export
 get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "ejaccard") {
   query_dfm <- dfm_subset(corp_dfm, docname_ %in% query_book_titles)
   
@@ -54,6 +54,18 @@ get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "eja
   top_ten <- head(ordered, n = 10)
   names(top_ten) <- names(top_ten) |> gsub(pattern = "\\..*$", replacement = "")
   return(names(top_ten))
+}
+
+#' export
+parse_recommendations <- function(rec_book_names, data_tab) {
+  subset_books <- data_tab |> 
+    filter(
+      title %in% rec_book_names  
+    ) |>
+    select(
+      title, average_rating, description, author_id, url, image_url, genre
+    )
+  return(subset_books)
 }
 
 # hp3 <- dfm_subset(corp_dfm, docname_ %in% "A Game of Thrones (A Song of Ice and Fire, #1)")

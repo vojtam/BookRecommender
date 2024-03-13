@@ -40,7 +40,7 @@ server <- function(id) {
     #spacy_install()
     selected_books_titles <- mod_search_books$server("search_books", data$title, data$image_url)
     
-    mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles)
+    mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data)
     
   })
 }
