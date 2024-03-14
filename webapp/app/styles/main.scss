@@ -79,10 +79,41 @@
   
 }
 
-.book-card {
-  border: 1px solid #333;
+.book-card__container {
   display: flex;
-  width: 400px;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.book-card__cover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FACEB6;
+}
+
+
+.book-card__cover__image {
+  height: 160;
+  width: 92;
+
+}
+
+.book-card__info-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.book-card__info-section__genre-section {
+  background-color: #FACEB6;
+}
+
+.book-card__info-section__title {
+  font-weight: 600;
+  color: #700202;
+  text-align: center;
 }
 
 .book-cover {
