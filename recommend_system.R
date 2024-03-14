@@ -3,8 +3,9 @@
 remotes::install_github("quanteda/quanteda.corpora")
 remotes::install_github("kbenoit/quanteda.dictionaries")
 remotes::install_github("quanteda/readtext") 
-install.packages("quanteda.textplots")
-install.packages("quanteda.textstats")
+remotes::install_github("quanteda.textplots")
+remotes::install_github("quanteda.textstats")
+
 
 
 # load libraries ----------------------------------------------------------
@@ -120,6 +121,7 @@ dfm_harry_potter <- corpus_subset(corp, title %in% grep("*Harry Potter*", title,
   tokens_remove(stopwords("en")) |>
   dfm()
 
+
 dfm_harry_potter3 <- corpus_subset(corp, title == "Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)") |>
   tokens(remove_punct = TRUE) |>
   tokens_wordstem(language = "en") |>
@@ -133,10 +135,18 @@ dfm_harry_potter5 <- corpus_subset(corp, title == "Harry Potter and the Order of
   dfm()
 
 
+dfm_harry_potter4 <- corpus_subset(corp, title == "Harry Potter and the Goblet of Fire (Harry Potter, #4)") |>
+  tokens(remove_punct = TRUE) |>
+  tokens_wordstem(language = "en") |>
+  tokens_remove(stopwords("en")) |>
+  dfm()
 
-tstat <- textstat_simil(dfm_harry_potter3, dfm_harry_potter5,
+
+tstat <- textstat_simil(dfm_harry_potter4, dfm_harry_potter5,
                               margin = "documents", method = "cosine")
 as.list(tstat)
 
+
+hp4_tfidf <- dfm_tfidf(dfm_harry_potter4)
 
 

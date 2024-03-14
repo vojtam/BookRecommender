@@ -83,6 +83,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 
@@ -90,6 +91,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  height: 200px;
+  width: 150px;
   background-color: #FACEB6;
 }
 
@@ -104,6 +108,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .book-card__info-section__genre-section {
