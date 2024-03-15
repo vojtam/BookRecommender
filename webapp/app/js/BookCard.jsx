@@ -12,7 +12,7 @@ export default function BookCard({ title, author, avg_rating, genres, descriptio
 
       <div className="book-card__info-section">
         <div className="book-card__info-section__genre-section">
-          <span>{genres}</span>
+          <span>#{genres}</span>
         </div>
         <h3 className="book-card__info-section__title">{title}</h3>
         <p className="book-card__info-section__author">by {author}</p>

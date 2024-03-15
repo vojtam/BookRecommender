@@ -1,7 +1,7 @@
 box::use(
   utils[head],
   shiny[div, moduleServer, tagList, actionButton, observeEvent, h1, h3, p, NS, selectizeInput,  HTML, tags],
-  bslib[page_fillable, nav_panel, page_navbar, page_sidebar, layout_columns, card, card_header, card_body],
+  bslib[page_fillable, page_sidebar, nav_panel, page_navbar, layout_columns, card, card_header, card_body],
   waiter[useWaiter, autoWaiter, waiter_show, spin_fading_circles, waiter_hide, waiterShowOnLoad, waiter_on_busy],
   spacyr[spacy_install],
 )
@@ -15,20 +15,23 @@ box::use(
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  page_fillable(
+  page_sidebar(
+
     useWaiter(),
     waiter_on_busy(html = tagList(div(class = "main-waiter", h3("Give me a second to read all those books..."), spin_fading_circles()))),
     waiterShowOnLoad(html = tagList(div(class = "main-waiter", h3("Give me a second to read all those books..."), spin_fading_circles()))),
     title = "Book Recommender",
+    sidebar = "Sidebar",
+    fillable = FALSE,
     tags$main(
       class = "main-container",
-      h1("Discover books you will adore!", class = "align-text-center"),
-      div(class = "text-main align-text-center", p(" Enter books you like and the site will analyse the contents of the books to provide book recommendations and suggestions for what to read next.")),
-      mod_search_books$ui(ns("search_books")),
-      mod_recommend_books$ui(ns("recommend_books"))
-
+      tags$section(
+        h1("Discover books you will love!", class = "align-text-center"),
+        div(class = "text-main align-text-center", p(" Enter books you like and the site will analyse the contents of the books to provide book recommendations and suggestions for what to read next.")),
+        mod_search_books$ui(ns("search_books")),
+        mod_recommend_books$ui(ns("recommend_books"))
+      )
     )
-
   )
 }
 
