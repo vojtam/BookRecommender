@@ -2,7 +2,21 @@ const { useState } = React;
 import Swal from 'sweetalert2'
 import ReactDOM from 'react-dom/client'
 import withReactContent from 'sweetalert2-react-content'
+import { FaStar, FaGoodreads } from "react-icons/fa";
 
+function getClassName(genre) {
+  const classMap = {
+    "children": "children-color",
+    "fantasy": "fantasy-color",
+    "history_biography": "history_biography-color",
+    "graphic_comics": "comics-color",
+    "romance": "romance-color",
+    "poetry": "poetry-color",
+    "YA": "YA-color",
+    "crime": "crime-color"
+  };
+  return classMap[genre.toLowerCase()] || "default_color"; // Use toLowerCase for case-insensitivity
+}
 
 const showDesc = (title, message) => {
   withReactContent(
@@ -17,10 +31,6 @@ const showDesc = (title, message) => {
 }
 
 export default function BookCard({ title, author, avg_rating, genres, description, imageUrl, url }) {
-  //const [showDescription, setShowDescription] = useState(false);
-
-  //const toggleDescription = () => setShowDescription(!showDescription);
-
   return (
     <div className="book-card__container">
       <div className="book-card__cover">
@@ -30,16 +40,22 @@ export default function BookCard({ title, author, avg_rating, genres, descriptio
       <div className="book-card__info-section">
         <div className="book-card__info-section__genre-section">
           {genres.map((genre) => (
-             <span>#{genre}</span>
+            <div className={getClassName(genre) + " book-card__info-section__genre-section-container" + " flex-center"}>
+              <span className='book-card__info-section__genre-section-conteiner-text'>#{genre}</span>
+            </div>
           ))}
-    
         </div>
+    
             
         <h3 className="book-card__info-section__title">{title}</h3>
         <p className="book-card__info-section__author">by {author}</p>
         <div className="book-card__info-section__rating">
-          <i className="fas fa-star"></i>
-          <span>{genres}</span>
+          <FaStar className='book-card__info-section__rating-icon' />
+          <span className='book-card__info-section__rating-icon-rating'>{avg_rating}</span>
+          
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            <FaGoodreads className='book-card__info-section__rating-icon'/>
+          </a>
         </div>
         <button
           className="book-card__info-section__show-description-btn btn btn-sm"
