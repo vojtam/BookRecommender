@@ -63,7 +63,7 @@ parse_recommendations <- function(rec_book_names, data_tab) {
       title %in% rec_book_names  
     ) |>
     select(
-      title, average_rating, description, author_id, url, image_url, genre
+      title, average_rating, description, author_id, url, image_url, genres
     )
   return(subset_books)
 }

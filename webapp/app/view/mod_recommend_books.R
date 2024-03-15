@@ -40,11 +40,10 @@ server <- function(id, corp_dfm, query_book_titles, data_tab) {
   })
 }
 
-create_card <- function(title, average_rating, description, author_id, url, image_url, genre) {
+create_card <- function(title, average_rating, description, author_id, url, image_url, genres) {
   BookCard(title = title,
-           author = author_id,
            avg_rating = average_rating,
-           genres = genre,
+           genres = as.list(genres),
            description = description,
            imageUrl = image_url,
            url = url

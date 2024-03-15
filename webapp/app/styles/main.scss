@@ -122,12 +122,12 @@
 
 .book-card__info-section__genre-section {
   margin-top: 0.8rem;
-  background-color: #FACEB6;
-  padding: 0.5px;
 }
 
 .book-card__info-section__genre-section > span {
   font-style: italic;
+  background-color: #FACEB6;
+  padding: 5px;
 }
 
 .book-card__info-section__title {
@@ -136,10 +136,17 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   height: 3.5rem;
   color: #700202;
   text-align: center;
+}
+
+
+.book-card__info-section__show-description-btn {
+  background-color: #700202;
+  color: white;
+  margin-bottom: 0.6rem;
 }
 
 .book-cover {

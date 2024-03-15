@@ -38,7 +38,7 @@ ui <- function(id) {
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    data <- data.table::fread("data/dataset_goodreads_filtered.csv")
+    data <- load_data("data/dataset_goodreads_filtered_string_genre.csv")
     corp_dfm <- readRDS("data/ref_corp_dfm.rds")
     #spacy_install()
     selected_books_titles <- mod_search_books$server("search_books", data$title, data$image_url)
@@ -49,3 +49,9 @@ server <- function(id) {
 }
 
 
+load_data <- function(path) {
+  data <- data.table::fread(path)
+  data[, genres := strsplit(genre, split = ",")]
+  data$genre <- NULL
+  return(data)
+}
