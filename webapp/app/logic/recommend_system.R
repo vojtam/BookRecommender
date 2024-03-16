@@ -40,7 +40,7 @@ spacy_pipeline <- function(corp) {
 }
 
 #' export
-get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "ejaccard") {
+get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "ejaccard", how_many) {
   query_dfm <- dfm_subset(corp_dfm, docname_ %in% query_book_titles)
   
   tstat <- textstat_simil(
@@ -51,9 +51,9 @@ get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "eja
   
   stat_list <- as.list(tstat)
   ordered <- sort(unlist(stat_list), decreasing = TRUE)
-  top_ten <- head(ordered, n = 10)
-  names(top_ten) <- names(top_ten) |> gsub(pattern = "\\..*$", replacement = "")
-  return(names(top_ten))
+  top_n <- head(ordered, n = how_many)
+  names(top_n) <- names(top_n) |> gsub(pattern = "\\..*$", replacement = "")
+  return(names(top_n))
 }
 
 #' export
@@ -63,7 +63,7 @@ parse_recommendations <- function(rec_book_names, data_tab) {
       title %in% rec_book_names  
     ) |>
     select(
-      title, average_rating, description, author_id, url, image_url, genres
+      title, average_rating, description, url, image_url, genres, author_name
     )
   return(subset_books)
 }

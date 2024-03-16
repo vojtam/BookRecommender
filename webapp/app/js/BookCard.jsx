@@ -12,10 +12,10 @@ function getClassName(genre) {
     "graphic_comics": "comics-color",
     "romance": "romance-color",
     "poetry": "poetry-color",
-    "YA": "YA-color",
+    "ya": "YA-color",
     "crime": "crime-color"
   };
-  return classMap[genre.toLowerCase()] || "default_color"; // Use toLowerCase for case-insensitivity
+  return classMap[genre.toLowerCase().trim()] || "default_color"; // Use toLowerCase for case-insensitivity
 }
 
 const showDesc = (title, message) => {
@@ -30,7 +30,7 @@ const showDesc = (title, message) => {
   )
 }
 
-export default function BookCard({ title, author, avg_rating, genres, description, imageUrl, url }) {
+export default function BookCard({ title, author_name, avg_rating, genres, description, imageUrl, url }) {
   return (
     <div className="book-card__container">
       <div className="book-card__cover">
@@ -48,7 +48,7 @@ export default function BookCard({ title, author, avg_rating, genres, descriptio
     
             
         <h3 className="book-card__info-section__title">{title}</h3>
-        <p className="book-card__info-section__author">by {author}</p>
+        <p className="book-card__info-section__author">{author_name}</p>
         <div className="book-card__info-section__rating">
           <FaStar className='book-card__info-section__rating-icon' />
           <span className='book-card__info-section__rating-icon-rating'>{avg_rating}</span>

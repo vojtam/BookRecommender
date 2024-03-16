@@ -27,7 +27,7 @@ server <- function(id, corp_dfm, query_book_titles, data_tab) {
     book_recommends_tab <- reactiveVal()
   
     observeEvent(input$get_recommend_btn, {
-      titles <- get_recommendations(corp_dfm, query_book_titles())
+      titles <- get_recommendations(corp_dfm, query_book_titles(), "ejaccard", 8)
       recommends_tab <- parse_recommendations(titles, data_tab)
       book_recommends_tab(recommends_tab)
     })
@@ -40,12 +40,14 @@ server <- function(id, corp_dfm, query_book_titles, data_tab) {
   })
 }
 
-create_card <- function(title, average_rating, description, author_id, url, image_url, genres) {
+create_card <- function(title, average_rating, description, url, image_url, genres, author_name) {
   BookCard(title = title,
            avg_rating = average_rating,
            genres = as.list(genres),
            description = description,
+           author_name = author_name,
            imageUrl = image_url,
-           url = url
+           url = url,
+
   )
 }
