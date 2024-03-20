@@ -4,19 +4,8 @@ import ReactDOM from 'react-dom/client'
 import withReactContent from 'sweetalert2-react-content'
 import { FaStar, FaGoodreads } from "react-icons/fa";
 
-function getClassName(genre) {
-  const classMap = {
-    "children": "children-color",
-    "fantasy": "fantasy-color",
-    "history_biography": "history_biography-color",
-    "graphic_comics": "comics-color",
-    "romance": "romance-color",
-    "poetry": "poetry-color",
-    "ya": "YA-color",
-    "crime": "crime-color"
-  };
-  return classMap[genre.toLowerCase().trim()] || "default_color"; // Use toLowerCase for case-insensitivity
-}
+import { GenreTag } from './GenreTag';
+
 
 const showDesc = (title, message) => {
   withReactContent(
@@ -40,9 +29,7 @@ export default function BookCard({ title, author_name, avg_rating, genres, descr
       <div className="book-card__info-section">
         <div className="book-card__info-section__genre-section">
           {genres.map((genre) => (
-            <div className={getClassName(genre) + " book-card__info-section__genre-section-container" + " flex-center"}>
-              <span className='book-card__info-section__genre-section-conteiner-text'>#{genre}</span>
-            </div>
+            <GenreTag genre={genre}/>
           ))}
         </div>
     

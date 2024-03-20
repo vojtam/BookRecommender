@@ -222,3 +222,13 @@
   font-weight: 500;
   font-size: 1.1rem;
 }
+
+
+.img-card {
+  max-width: 450px !important;
+}
+
+.img-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}

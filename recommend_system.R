@@ -21,7 +21,7 @@ library("quanteda.textstats")
 
 
 # 1) Create a corpus ------------------------------------------------------
-dataset_path <- file.path("data/dataset_goodreads_filtered.csv")
+dataset_path <- file.path("../data/dataset_goodreads_filtered_description.csv")
 
 text <- readtext(dataset_path, text_field = "description")
 corp <- text |> corpus()
@@ -32,14 +32,24 @@ docnames(corp) <- paste(text$book_id, text$title, sep = "-")
 # 2) Tokenize corpus ------------------------------------------------------
 
 # remove numbers and punctuation, convert to lower
-corp_tokens <- tokens(corp, remove_numbers = TRUE, remove_punct = TRUE) |>
-  tokens_tolower()
+process_corpus_to_dfm <- function(corpus) {
+  res_tokens <- corpus |>
+  spacy_parse() |> 
+    filter(
+      ! pos %in% c("PUNCT", "PART", "NUM", "SYM")
+    ) |>
+    mutate(
+      lemma = tolower(lemma)
+    ) |>
+    as.tokens(
+      use_lemma = TRUE
+    ) |>
+    tokens_remove(stopwords("en"))
+  
+  corp_dfm <- res_tokens |> dfm()
+  return(corp_dfm)
+}
 
-
-
-# 3) remove stopwords -----------------------------------------------------
-
-corp_tokens <- corp_tokens |> tokens_remove(stopwords("en"))
 
 # 5) search in the corpus -------------------------------------------------
 
@@ -58,95 +68,67 @@ dfm_matrix <- dfm(corp_tokens)
 topfeatures(dfm_matrix, 20)
 
 
+plot_wordcloud <- function(dfm, name) {
+  png(paste0("data/plots/", name, ".png"), res = 200, width = 800, height = 800)
+  textplot_wordcloud(dfm, min_count = 6, random_order = FALSE,
+                                        rotation = .25, max_size = 20, 
+                                        color = RColorBrewer::brewer.pal(8, "Dark2"))
+  dev.off()
+}
+
 
 # 7) word cloud -----------------------------------------------------------
 set.seed(100)
 
-textplot_wordcloud(dfm_matrix, min_count = 6, random_order = FALSE,
-                   rotation = .25,
-                   color = RColorBrewer::brewer.pal(8, "Dark2"))
+dfm_fantasy <- corpus_subset(corp, genre %in% grep("*fantasy*", genre, value = TRUE)) |>
+  process_corpus_to_dfm()
 
+plot_wordcloud(dfm_fantasy, "fantasy")
 
-dfm_fantasy <- corpus_subset(corp, genre == "fantasy") |>
-  tokens(remove_punct = TRUE, remove_numbers = TRUE) |>
-  tokens_remove(stopwords("en")) |>
-  dfm()
-
-
-textplot_wordcloud(dfm_fantasy, min_count = 6, random_order = FALSE,
-                   rotation = .25,
-                   color = RColorBrewer::brewer.pal(8, "Dark2"))
-
-
-unique(docvars(corp)$genre)
 
 dfm_romance <- corpus_subset(corp, genre %in% grep("*romance*", genre, value = TRUE)) |>
-  tokens(remove_punct = TRUE, remove_numbers = TRUE) |>
-  tokens_remove(stopwords("en")) |>
-  dfm()
-
-
-textplot_wordcloud(dfm_romance, min_count = 6, random_order = FALSE,
-                   rotation = .25,
-                   color = RColorBrewer::brewer.pal(8, "Dark2"))
+  process_corpus_to_dfm()
+  
+plot_wordcloud(dfm_romance, "romance")
 
 
 
 dfm_children <- corpus_subset(corp, genre %in% grep("*children*", genre, value = TRUE)) |>
-  tokens(remove_punct = TRUE, remove_numbers = TRUE) |>
-  tokens_remove(stopwords("en")) |>
-  dfm()
+  process_corpus_to_dfm()
 
+plot_wordcloud(dfm_children, "children")
 
-textplot_wordcloud(dfm_children, min_count = 6, random_order = FALSE,
-                   rotation = .25,
-                   color = RColorBrewer::brewer.pal(8, "Dark2"))
 
 
 dfm_crime <- corpus_subset(corp, genre %in% grep("*crime*", genre, value = TRUE)) |>
-  tokens(remove_punct = TRUE, remove_numbers = TRUE) |>
-  tokens_remove(stopwords("en")) |>
-  dfm()
+  process_corpus_to_dfm()
 
-
-textplot_wordcloud(dfm_crime, min_count = 6, random_order = FALSE,
-                   rotation = .25,
-                   color = RColorBrewer::brewer.pal(8, "Dark2"))
+plot_wordcloud(dfm_crime, "crime")
 
 
 
-dfm_harry_potter <- corpus_subset(corp, title %in% grep("*Harry Potter*", title, value = TRUE)) |>
-  tokens(remove_punct = TRUE) |>
-  tokens_wordstem(language = "en") |>
-  tokens_remove(stopwords("en")) |>
-  dfm()
+dfm_YA <- corpus_subset(corp, genre %in% grep("*YA*", genre, value = TRUE)) |>
+  process_corpus_to_dfm()
+
+plot_wordcloud(dfm_YA, "YA")
 
 
-dfm_harry_potter3 <- corpus_subset(corp, title == "Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)") |>
-  tokens(remove_punct = TRUE) |>
-  tokens_wordstem(language = "en") |>
-  tokens_remove(stopwords("en")) |>
-  dfm()
 
-dfm_harry_potter5 <- corpus_subset(corp, title == "Harry Potter and the Order of the Phoenix (Harry Potter, #5)") |>
-  tokens(remove_punct = TRUE) |>
-  tokens_wordstem(language = "en") |>
-  tokens_remove(stopwords("en")) |>
-  dfm()
+dfm_hist <- corpus_subset(corp, genre %in% grep("*history_biography*", genre, value = TRUE)) |>
+  process_corpus_to_dfm()
+
+plot_wordcloud(dfm_hist, "history")
 
 
-dfm_harry_potter4 <- corpus_subset(corp, title == "Harry Potter and the Goblet of Fire (Harry Potter, #4)") |>
-  tokens(remove_punct = TRUE) |>
-  tokens_wordstem(language = "en") |>
-  tokens_remove(stopwords("en")) |>
-  dfm()
+dfm_poetry <- corpus_subset(corp, genre %in% grep("*poetry*", genre, value = TRUE)) |>
+  process_corpus_to_dfm()
+
+plot_wordcloud(dfm_poetry, "poetry")
 
 
-tstat <- textstat_simil(dfm_harry_potter4, dfm_harry_potter5,
-                              margin = "documents", method = "cosine")
-as.list(tstat)
 
+dfm_comics <- corpus_subset(corp, genre %in% grep("*graphic_comics*", genre, value = TRUE)) |>
+  process_corpus_to_dfm()
 
-hp4_tfidf <- dfm_tfidf(dfm_harry_potter4)
-
+plot_wordcloud(dfm_comics, "comics")
 
