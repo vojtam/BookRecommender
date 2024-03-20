@@ -1,6 +1,6 @@
 box::use(
   utils[head],
-  shiny[div, moduleServer, tagList, actionButton, observeEvent, h1, h3, p, NS, selectizeInput,  HTML, tags],
+  shiny[div, moduleServer, sliderInput, tagList, actionButton, observeEvent, h1, h3, p, NS, selectizeInput,  HTML, tags],
   bslib[page_fillable, page_sidebar, nav_panel, page_navbar, layout_columns, card, card_header, card_body],
   waiter[useWaiter, autoWaiter, waiter_show, spin_fading_circles, waiter_hide, waiterShowOnLoad, waiter_on_busy],
   spacyr[spacy_install],
@@ -21,7 +21,7 @@ ui <- function(id) {
     waiter_on_busy(html = tagList(div(class = "main-waiter", h3("Give me a second to read all those books..."), spin_fading_circles()))),
     waiterShowOnLoad(html = tagList(div(class = "main-waiter", h3("Give me a second to read all those books..."), spin_fading_circles()))),
     title = "Book Recommender",
-    sidebar = "Sidebar",
+    sidebar = my_sidebar(ns),
     fillable = FALSE,
     tags$main(
       class = "main-container",
@@ -43,7 +43,7 @@ server <- function(id) {
     #spacy_install()
     selected_books_titles <- mod_search_books$server("search_books", data$title, data$image_url)
     
-    mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data)
+    mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data, input$how_many_recommends_slider)
     
   })
 }
@@ -54,4 +54,11 @@ load_data <- function(path) {
   data[, genres := strsplit(genre, split = ",")]
   data$genre <- NULL
   return(data)
+}
+
+
+my_sidebar <- function(ns) {
+  tagList(
+    sliderInput(ns("how_many_recommends_slider"), "Number of books to recommend", 1, 100, 10, step = 1)
+  )
 }

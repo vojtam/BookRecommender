@@ -4,6 +4,7 @@ box::use(
   utils[head],
   spacyr[spacy_parse],
   dplyr[mutate, filter, select],
+  data.table[setorderv],
 )
 
 
@@ -47,13 +48,10 @@ get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "eja
     query_dfm, corp_dfm,
     margin = "documents",
     method = simil_method
-  )
-  
-  stat_list <- as.list(tstat)
-  ordered <- sort(unlist(stat_list), decreasing = TRUE)
-  top_n <- head(ordered, n = how_many)
-  names(top_n) <- names(top_n) |> gsub(pattern = "\\..*$", replacement = "")
-  return(names(top_n))
+  ) |>
+  as.data.frame()
+  setorderv(tstat, cols = c(simil_method), order = -1)
+  return(tstat[1:how_many,]$document2)
 }
 
 #' export
