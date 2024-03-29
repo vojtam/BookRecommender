@@ -43,9 +43,10 @@ spacy_pipeline <- function(corp) {
 #' export
 get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "cosine", how_many) {
   query_dfm <- dfm_subset(corp_dfm, docname_ %in% query_book_titles)
+  rest_dfm <- dfm_subset(corp_dfm, !docname_ %in% query_book_titles)
   
   tstat <- textstat_simil(
-    query_dfm, corp_dfm,
+    query_dfm, rest_dfm,
     margin = "documents",
     method = simil_method
   ) |>

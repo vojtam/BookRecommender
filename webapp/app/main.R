@@ -1,6 +1,6 @@
 box::use(
-  utils[head],
-  shiny[div, moduleServer, sliderInput, tagList, actionButton, observeEvent, h1, h3, p, NS, selectizeInput,  HTML, tags],
+  utils[head, read.csv2],
+  shiny[div, moduleServer, sliderInput, tagList, req, reactiveVal, actionButton, fileInput, observeEvent, h1, h3, p, NS, selectizeInput,  HTML, tags],
   bslib[page_fillable, page_sidebar, nav_panel, page_navbar, layout_columns, card, card_header, card_body, layout_column_wrap, value_box, input_dark_mode, nav_item],
   shinyWidgets[pickerInput],
   waiter[useWaiter, autoWaiter, waiter_show, spin_fading_circles, waiter_hide, waiterShowOnLoad, waiter_on_busy],
@@ -43,6 +43,9 @@ ui <- function(id) {
       mod_data_analysis$ui(ns("data_analysis"))
     ),
     nav_item(
+      fileInput(ns("upload_goodreads"), NULL, buttonLabel = "Upload goodreads", multiple = FALSE)
+    ),
+    nav_item(
       input_dark_mode(id = "dark_mode", mode = "light")
     )
   )
@@ -63,6 +66,17 @@ server <- function(id) {
     
     observeEvent(input$simil_metrics, {
       mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data, input$how_many_recommends_slider, input$simil_metrics)
+    })
+    
+    observeEvent(input$upload_goodreads, {
+      req(input$upload_goodreads)
+      user_data <- read.csv2(input$upload_goodreads$datapath, sep = ",")
+      user_data <- dplyr::filter(user_data,
+                                 Book.Id %in% data$book_id,
+                                 max(user_data$My.Rating) == user_data$My.Rating)
+      books <- reactiveVal(data[book_id %in% user_data$Book.Id]$title)
+      mod_recommend_books$server("recommend_books", corp_dfm, books, data, input$how_many_recommends_slider, input$simil_metrics)
+      
     })
     
   })
