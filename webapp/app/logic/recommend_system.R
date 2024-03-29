@@ -9,8 +9,8 @@ box::use(
 
 
 
-create_ref_corpus <- function(data_tab) {
-  corp <- corpus(data_tab, text_field = "description")
+create_ref_corpus <- function(data_tab, field) {
+  corp <- corpus(data_tab, text_field = field)
   docnames(corp) <- data_tab$title
   return(corp)
 }
@@ -32,16 +32,16 @@ spacy_pipeline <- function(corp) {
   
   corp_dfm <- res_tokens |> dfm()
   
-  saveRDS(corp_dfm, "./data/ref_corp_dfm.rds")
+  saveRDS(corp_dfm, "./data/ref_with_reviews_corp_dfm.rds")
   
   
   corp_tfidf <- corp_dfm |> dfm_tfidf()
   
-  saveRDS(corp_tfidf, "./data/ref_corp_tfidf.rds")
+  saveRDS(corp_tfidf, "./data/ref_with_reviews_corp_tfidf.rds")
 }
 
 #' export
-get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "ejaccard", how_many) {
+get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "cosine", how_many) {
   query_dfm <- dfm_subset(corp_dfm, docname_ %in% query_book_titles)
   
   tstat <- textstat_simil(

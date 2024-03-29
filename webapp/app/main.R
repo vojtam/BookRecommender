@@ -1,7 +1,8 @@
 box::use(
   utils[head],
   shiny[div, moduleServer, sliderInput, tagList, actionButton, observeEvent, h1, h3, p, NS, selectizeInput,  HTML, tags],
-  bslib[page_fillable, page_sidebar, nav_panel, page_navbar, layout_columns, card, card_header, card_body, layout_column_wrap, value_box],
+  bslib[page_fillable, page_sidebar, nav_panel, page_navbar, layout_columns, card, card_header, card_body, layout_column_wrap, value_box, input_dark_mode, nav_item],
+  shinyWidgets[pickerInput],
   waiter[useWaiter, autoWaiter, waiter_show, spin_fading_circles, waiter_hide, waiterShowOnLoad, waiter_on_busy],
   spacyr[spacy_install],
 )
@@ -40,6 +41,9 @@ ui <- function(id) {
     nav_panel(
       "Data analysis",
       mod_data_analysis$ui(ns("data_analysis"))
+    ),
+    nav_item(
+      input_dark_mode(id = "dark_mode", mode = "light")
     )
   )
 }
@@ -48,11 +52,18 @@ ui <- function(id) {
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
     data <- load_data("data/dataset_goodreads_filtered.csv")
-    corp_dfm <- readRDS("data/ref_corp_dfm.rds")
+    corp_dfm <- readRDS("data/ref_with_reviews_corp_tfidf.rds")
     #spacy_install()
     selected_books_titles <- mod_search_books$server("search_books", data$title, data$image_url)
-    mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data, input$how_many_recommends_slider)
     mod_data_analysis$server("data_analysis")
+    
+    observeEvent(input$how_many_recommends_slider, {
+      mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data, input$how_many_recommends_slider, input$simil_metrics)
+    })
+    
+    observeEvent(input$simil_metrics, {
+      mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data, input$how_many_recommends_slider, input$simil_metrics)
+    })
     
   })
 }
@@ -63,12 +74,20 @@ load_data <- function(path) {
   data[, genres := strsplit(genre, split = ",")]
   data[, average_rating := as.numeric(average_rating)]
   data$genre <- NULL
+  data$similar_books <- NULL
   return(data)
 }
 
 
 my_sidebar <- function(ns) {
   tagList(
-    sliderInput(ns("how_many_recommends_slider"), "Number of books to recommend", 1, 100, 10, step = 1)
+    sliderInput(ns("how_many_recommends_slider"), "Number of books to recommend", 1, 100, 10, step = 1),
+    pickerInput(
+      inputId = ns("simil_metrics"),
+      label = "Content similarity metric",
+      selected = "cosine", 
+      choices = c("correlation", "cosine", "jaccard", "ejaccard", "dice", "edice", "hamann",
+                  "simple matching")
+    )
   )
 }

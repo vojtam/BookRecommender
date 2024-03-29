@@ -22,12 +22,13 @@ ui <- function(id) {
 }
 
 #' @export
-server <- function(id, corp_dfm, query_book_titles, data_tab, how_many) {
+server <- function(id, corp_dfm, query_book_titles, data_tab, how_many, simil_metrics) {
   moduleServer(id, function(input, output, session) {
     book_recommends_tab <- reactiveVal()
   
     observeEvent(input$get_recommend_btn, {
-      titles <- get_recommendations(corp_dfm, query_book_titles(), "ejaccard", how_many)
+      print(simil_metrics)
+      titles <- get_recommendations(corp_dfm, query_book_titles(), simil_metrics, how_many)
       recommends_tab <- parse_recommendations(titles, data_tab)
       book_recommends_tab(recommends_tab)
     })
