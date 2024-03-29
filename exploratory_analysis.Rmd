@@ -1,0 +1,369 @@
+---
+title: "Book Recommendation Project - Exploratory Analysis"
+author: "Vojtěch Máčala, Anna Hýsková, Karolína Rusnačková"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    theme: cerulean
+    code_folding: hide
+    toc: yes
+    toc_float:
+      collapsed: true
+---
+
+```{r, include=FALSE}
+library("tidyr")
+library("dplyr")
+library("ggplot2")
+library("stringr")
+library("scales")
+library("corrplot")
+library("purrr")
+library("ppcor")   
+library("GGally")   
+library("ggcorrplot") 
+library("gridExtra")
+library("DT")
+library("Hmisc")
+```
+
+<style>
+  body{
+    color: black !important;
+    font-size: 16px; 
+  }
+</style>
+
+# GooodReads Database
+As part of pre-processing, the database has been divided into 3 separate files: \
+• the main file further described below, \
+• subset of the dataset above, includes only records with non-empty descriptions, \
+• data with reviews of the users. \
+
+## The Main Dataset
+```{r}
+data_main <- read.csv2(file = "data/dataset_goodreads_filtered.csv", sep=",")
+data_desc <- read.csv2(file = "data/dataset_goodreads_filtered_description.csv", sep=",")
+rows_n <- nrow(data_main)
+cat("Number of Records: ", paste(rows_n, collapse = ", "))
+```
+### Features
+```{r echo=FALSE}
+(colnames(data_main))
+```
+```{r}
+str(data_main)
+```
+### Missing and Unique Values
+```{r}
+empty_count <- colSums(as.matrix(data_main) == "")
+empty <- names(empty_count[empty_count > 0])
+
+missing_vals <- colSums(is.na(data_main))
+
+cat("Columns with Empty Strings:", paste(empty, collapse = ", "))
+cat("Columns with NaNs:", paste(names(missing_vals[missing_vals > 0]), collapse = ", "))
+```
+```{r}
+unique_columns <- c()
+
+for (col in names(data_main)) {
+  if (length(unique(data_main[[col]])) == length(data_main[[col]])) {
+    unique_columns <- c(unique_columns, col)
+  }
+}
+cat("Columns with unique values: ", paste(unique_columns, collapse = ", "))
+```
+### Feature Statistics
+#### Title
+```{r}
+tmp <- data_main |>
+  mutate(
+    title_length = str_count(title, '\\w+'))
+
+plot_hist <- tmp |> 
+  ggplot(aes(x=title_length)) +
+  geom_histogram(color = "black", fill = "cornflowerblue", bins = 35) +
+  labs(title = "Title Length Histogram", x = "Title Length (in Words)", y = "Count") +
+  theme(plot.title = element_text(hjust=0.5))
+
+boxplot <- tmp |> ggplot(aes(y = title_length, x = "")) + 
+  geom_boxplot(color = "black", alpha = 0.3, fill = "cornflowerblue", outlier.shape = NA) + 
+  geom_jitter(pch = 21, size = 2.5, width = 0, height = 0.1) + 
+  labs(title = "Title Length Boxplot", x = "Title Length (in Words)", y ="Length (in Words)")
+
+gridExtra::grid.arrange(plot_hist, boxplot, ncol = 2, nrow = 1)
+```
+```{r}
+```
+#### Average Rating
+```{r}
+data_main <- data_main |> mutate(
+  average_rating = as.numeric(average_rating)
+)
+summary(data_main$average_rating)
+```
+```{r warning=FALSE}
+plot_hist <- data_main |>
+  ggplot(aes(x = average_rating)) +
+  geom_histogram(color = "black", fill = "palegreen2", bins = 50) +
+  labs(title = "Average Rating Histogram", x = "Average Rating (Number of Stars, 5 is Max)", y = "Count") +
+  xlim(0, 5) +
+  theme(plot.title = element_text(hjust=0.5))
+
+boxplot <- data_main |> ggplot(aes(y = average_rating, x = "")) + 
+  geom_boxplot(color = "black", alpha = 0.3, fill = "palegreen2", outlier.shape = NA) + 
+  geom_jitter(pch = 21, size = 2.5, width = 0, height = 0.1) + 
+  ylim(0, 5) +
+  labs(title = "Average Rating Boxplot", x = "Average Rating", y ="Stars")
+
+gridExtra::grid.arrange(plot_hist, boxplot, ncol = 2, nrow = 1)
+```
+
+```{r echo=FALSE}
+data_desc$description_length <- str_count(data_desc$description, '\\w+')
+```
+#### Description
+```{r}
+summary(data_desc$description_length)
+```
+
+```{r, warning=FALSE}
+plot_hist<- data_desc |> ggplot(aes(x = description_length)) +
+  geom_histogram(color = "black", fill = "plum1") +
+  labs(title = "Length of Description Histogram", x = "Length of Description (in Words)") +
+  xlim(0, 600) +
+  theme(plot.title = element_text(hjust=0.5))
+
+boxplot <- data_desc |> ggplot(aes(y = description_length, x = "")) + 
+  geom_boxplot(color = "black", alpha = 0.3, fill = "plum1", outlier.shape = NA) + 
+  geom_jitter(pch = 21, size = 2.5, width = 0, height = 0.1) + 
+  labs(title = "Length of Description Boxplot", x = "Length of Description", y ="Length (in Words)")
+
+gridExtra::grid.arrange(plot_hist, boxplot, ncol = 2, nrow = 1)
+```
+```{r}
+```
+#### Ratings Count
+```{r}
+summary(data_main$ratings_count)
+```
+```{r warning=FALSE}
+plot_hist <- data_main |> 
+  ggplot(aes(x = ratings_count)) +
+  geom_histogram(color = "black", fill = "salmon1", bins = 60) +
+  labs(title = "Ratings Count Histogram", x = "Ratings Count") +
+  xlim(0, 100000) +
+  theme(plot.title = element_text(hjust=0.5))
+
+boxplot <- data_main |> ggplot(aes(y = ratings_count, x = "")) + 
+  geom_boxplot(color = "black", alpha = 0.3, fill = "salmon1", outlier.shape = NA) + 
+  geom_jitter(pch = 21, size = 2.5, width = 0, height = 0.1) + 
+  scale_y_continuous(labels = label_number(suffix = " M", scale = 1e-6)) +
+  labs(title = "Ratings Count Boxplot", x = "Ratings Count", y = "Count (in Millions)")
+
+gridExtra::grid.arrange(plot_hist, boxplot, ncol = 2, nrow = 1)
+```
+```{r}
+```
+#### Genres (with overlapping categories)
+```{r}
+tmp <- data_main |>
+  group_by(genre) |>
+  dplyr::summarize(n = n()) |>
+  ungroup() |>
+  mutate(sumN = sum(n), percentage = n / sumN) |>
+  arrange(-percentage)
+
+tmp |>
+  ggplot(aes(reorder(genre, percentage), percentage, fill = percentage)) + 
+  geom_bar(stat = "identity") + coord_flip() +
+  labs(title = "Genre Distribution", y = 'Percentage', x = 'Genre')
+```
+```{r}
+```
+## Users Reviews
+```{r}
+data_reviews <- read.csv2(file = "data/reviews_tab_filtered.csv", sep=",")
+rows_n <- nrow(data_reviews)
+cat("Number of Records: ", paste(rows_n, collapse = ", "))
+```
+### Features
+```{r}
+colnames(data_reviews)
+```
+```{r}
+str(data_reviews)
+```
+### Missing and Unique Values
+```{r}
+missing_vals <- colSums(is.na(data_reviews))
+
+cat("Columns with NaNs:", paste(names(missing_vals[missing_vals > 0]), collapse = ", "))
+```
+```{r}
+unique_columns <- c()
+
+for (col in names(data_reviews)) {
+  if (length(unique(data_reviews[[col]])) == length(data_reviews[[col]])) {
+    unique_columns <- c(unique_columns, col)
+  }
+}
+cat("Columns with unique values: ", paste(unique_columns, collapse = ", "))
+```
+### Feature Statistics
+#### Ratings
+```{r}
+summary(data_reviews$rating)
+```
+```{r warning=FALSE}
+data_reviews |> 
+  ggplot(aes(x = factor(rating))) +
+  geom_bar(color = "black", fill = "pink") +
+  labs(title = "Number of Ratings", x = "Rating (in stars)", y = "Number of Natings (in thousands)") +
+  theme(plot.title = element_text(hjust=0.5)) +
+  scale_y_continuous(labels = label_number(suffix = " k", scale = 1e-3))
+```
+```{r}
+
+```
+#### Number of users reviewing one book
+```{r}
+users_num <- data_reviews |> count(book_id)
+summary(users_num$n)
+```
+
+```{r warning=FALSE}
+plot_hist <- users_num |>
+  ggplot(aes(x = n)) +
+  geom_histogram(color = "black", fill = "darksalmon", bins = 40) +
+  labs(title = "Number of Ratings of One Book Histogram", x = "Number of Ratings of One Book") +
+  xlim(0, 400) +
+  theme(plot.title = element_text(hjust=0.5))
+
+boxplot <- data_main |> ggplot(aes(y = ratings_count, x = "")) + 
+  geom_boxplot(color = "black", alpha = 0.3, fill = "darksalmon", outlier.shape = NA) + 
+  geom_jitter(pch = 21, size = 2.5, width = 0, height = 0.1) + 
+  scale_y_continuous(labels = label_number(suffix = " M", scale = 1e-6)) +
+  labs(title = "Number of Ratings of One Book Boxplot", x = "Number of Ratings of One Book", y ="Count (in Millions)")
+
+gridExtra::grid.arrange(plot_hist, boxplot, ncol = 2, nrow = 1)
+```
+```{r}
+
+```
+#### Average Rating of One User
+```{r message=FALSE}
+plot_hist <- data_reviews |> 
+  group_by(user_id) |> 
+  dplyr::summarize(mean_user_rating = mean(rating)) |>  
+  ggplot(aes(mean_user_rating)) +
+  geom_histogram(fill = "orange1", color = "black", bins=40)+
+  labs(title = "Average Rating of One User Histogram", x = "Average Rating of One User")
+
+boxplot <- data_reviews |> 
+  group_by(user_id) |> 
+  dplyr::summarize(mean_user_rating = mean(rating)) |>  
+  ggplot(aes(y = mean_user_rating, x = "")) + 
+  geom_boxplot(color = "black", alpha = 0.3, fill = "orange1", outlier.shape = NA) + 
+  geom_jitter(pch = 21, size = 2.5, width = 0, height = 0.1) + 
+  labs(title = "Average Rating of One User Boxplot", x = "Average Rating of One User", y ="Stars")
+
+gridExtra::grid.arrange(plot_hist, boxplot, ncol = 2, nrow = 1)
+```
+```{r}
+
+```
+#### Number of books reviews per user
+```{r}
+books_num <- data_reviews |> count(user_id)
+summary(books_num$n)
+```
+```{r warning=FALSE}
+plot_hist <- books_num |>
+  ggplot(aes(x = n)) +
+  geom_histogram(color = "black", fill = "purple", bins = 40) +
+  labs(title = "Number of Book Reviews per User Histogram", x = "Number of Book Reviews per User") +
+  xlim(0, 200) +
+  theme(plot.title = element_text(hjust=0.5))
+
+boxplot <- books_num |>
+  ggplot(aes(y = n, x = "")) + 
+  geom_boxplot(color = "black", alpha = 0.3, fill = "purple", outlier.shape = NA) + 
+  geom_jitter(pch = 21, size = 2.5, width = 0, height = 0.1) + 
+  labs(title = "Number of Book Reviews per User Boxplot", x = "Number of Book Reviews per User", y =NULL)
+
+gridExtra::grid.arrange(plot_hist, boxplot, ncol = 2, nrow = 1)
+```
+```{r}
+```
+#### Correlation Analysis
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+tmp <- data_main |> dplyr::select("average_rating", "ratings_count") |> mutate(
+    title_length = str_count(data_main$title, '\\w+'),
+    description_length = str_count(data_main$description, '\\w+')
+)
+Z <- as.matrix(tmp)
+
+ggpairs(tmp, upper = list(continuous = "points"), lower = list(continuous = "points"), diag = list(continuous = "densityDiag"))
+```
+\
+Spearman's Correlations
+```{r}
+R.Sp <- rcorr(Z, type = "spearman")
+diag(R.Sp$P) <- 0
+ggcorrplot(R.Sp$r, p.mat = R.Sp$P, title = "Spearman's correlations", 
+           lab = TRUE, type = "full", method = "square", outline.color = "white", show.legend = FALSE, pch.cex = 10)
+```
+```{r}
+```
+#### Relationship between the number of ratings of User and Average User's Rating \
+(Users who rate frequently might rate differently)
+```{r}
+tmp <- data_reviews |>
+  group_by(user_id) |>
+  dplyr::summarize(
+    number_of_ratings = n()
+  )
+tmp <- data_reviews |>
+  group_by(user_id) |>
+  dplyr::summarize(
+    mean_user_rating = mean(rating)
+  ) |> left_join(tmp, by = "user_id") |> dplyr::select(-"user_id")
+
+Z <- as.matrix(tmp)
+```
+```{r, message = FALSE}
+ggpairs(tmp, upper = list(continuous = "points"), lower = list(continuous = "points"), diag = list(continuous = "densityDiag"))
+```
+\
+Spearman's Correlations
+```{r}
+R.Sp <- rcorr(Z, type = "spearman")
+diag(R.Sp$P) <- 0
+ggcorrplot(R.Sp$r, p.mat = R.Sp$P, title = "Spearman's correlations", 
+           lab = TRUE, type = "full", method = "square", outline.color = "white", show.legend = FALSE, pch.cex = 10)
+```
+```{r}
+```
+#### 10 Best-Rated Books
+```{r}
+data_main |> 
+  mutate(image = paste0('<img src="', image_url, '"></img>')) |>
+  arrange(-average_rating) |>
+  top_n(10,wt = average_rating) |>
+  dplyr::select(image, title, ratings_count, average_rating) |>
+  datatable(class = "nowrap hover row-border", escape = FALSE, options = list(dom = 't',scrollX = TRUE, autoWidth = TRUE))
+```
+```{r}
+```
+#### Top 10 Most Frequently Rated Books
+```{r}
+data_main |>
+  mutate(image = paste0('<img src="', image_url, '"></img>')) |> 
+  arrange(-ratings_count) |>
+  top_n(10,wt = ratings_count) |>
+  dplyr::select(image, title, ratings_count, average_rating) |> 
+  datatable(class = "nowrap hover row-border", escape = FALSE, options = list(dom = 't',scrollX = TRUE, autoWidth = TRUE))
+```
+
