@@ -54,6 +54,9 @@ ui <- function(id) {
 #' @export
 server <- function(id) {
   moduleServer(id, function(input, output, session) {
+    
+    gargoyle::init("start_recommend_event")
+    
     data <- load_data("data/dataset_goodreads_filtered.csv")
     corp_dfm <- readRDS("data/ref_with_reviews_corp_tfidf.rds")
     #spacy_install()
@@ -62,10 +65,14 @@ server <- function(id) {
     
     observeEvent(input$how_many_recommends_slider, {
       mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data, input$how_many_recommends_slider, input$simil_metrics)
+      gargoyle::trigger("start_recommend_event")
+      
     })
     
     observeEvent(input$simil_metrics, {
       mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data, input$how_many_recommends_slider, input$simil_metrics)
+      gargoyle::trigger("start_recommend_event")
+      
     })
     
     observeEvent(input$upload_goodreads, {
@@ -76,7 +83,7 @@ server <- function(id) {
                                  max(user_data$My.Rating) == user_data$My.Rating)
       books <- reactiveVal(data[book_id %in% user_data$Book.Id]$title)
       mod_recommend_books$server("recommend_books", corp_dfm, books, data, input$how_many_recommends_slider, input$simil_metrics)
-      
+      gargoyle::trigger("start_recommend_event")
     })
     
   })

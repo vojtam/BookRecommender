@@ -2,6 +2,7 @@
 library(bsicons)
 library(bslib)
 library(dplyr)
+library(gargoyle)
 library(quanteda)
 library(quanteda.corpora)
 library(quanteda.textplots)

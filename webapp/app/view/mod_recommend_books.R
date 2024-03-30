@@ -27,16 +27,15 @@ server <- function(id, corp_dfm, query_book_titles, data_tab, how_many, simil_me
     book_recommends_tab <- reactiveVal()
     
     observeEvent(input$get_recommend_btn, {
+      gargoyle::trigger("start_recommend_event")
+    })
+    
+    observeEvent(gargoyle::watch("start_recommend_event"), {
+      req(query_book_titles())
       titles <- get_recommendations(corp_dfm, query_book_titles(), simil_metrics, how_many)
       recommends_tab <- parse_recommendations(titles, data_tab)
       book_recommends_tab(recommends_tab)
     })
-    
-    # observeEvent(query_book_titles(), {
-    #   titles <- get_recommendations(corp_dfm, query_book_titles(), simil_metrics, how_many)
-    #   recommends_tab <- parse_recommendations(titles, data_tab)
-    #   book_recommends_tab(recommends_tab)
-    # })
     
     output$bookCardsOutput <- renderUI({
       req(book_recommends_tab())
