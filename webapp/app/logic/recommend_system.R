@@ -1,5 +1,5 @@
 box::use(
-  quanteda[corpus, docnames, dfm, convert, dfm_tfidf, dfm_subset],
+  quanteda[corpus, docvars, docnames, dfm, convert, dfm_tfidf, dfm_subset],
   quanteda.textstats[textstat_simil],
   utils[head],
   spacyr[spacy_parse],
@@ -31,20 +31,23 @@ spacy_pipeline <- function(corp) {
     tokens_remove(stopwords("en"))
   
   corp_dfm <- res_tokens |> dfm()
+  docvars(corp_dfm) <- docvars(corp)
   
-  saveRDS(corp_dfm, "./data/ref_with_reviews_corp_dfm.rds")
+  saveRDS(corp_dfm, "./data/ref_corp_dfm.rds")
   
   
   corp_tfidf <- corp_dfm |> dfm_tfidf()
   
-  saveRDS(corp_tfidf, "./data/ref_with_reviews_corp_tfidf.rds")
+  saveRDS(corp_tfidf, "./data/ref_corp_tfidf.rds")
 }
 
 #' export
-get_recommendations <- function(corp_dfm, query_book_titles, simil_method = "cosine", how_many) {
+get_recommendations <- function(corp_dfm, query_book_titles, genres, simil_method = "cosine", how_many) {
   query_dfm <- dfm_subset(corp_dfm, docname_ %in% query_book_titles)
-  rest_dfm <- dfm_subset(corp_dfm, !docname_ %in% query_book_titles)
+  rest_dfm <- corp_dfm[grep(genres, paste(docvars(corp_dfm)$genres)),]
+  rest_dfm <- dfm_subset(rest_dfm, !docname_ %in% query_book_titles)
   
+
   tstat <- textstat_simil(
     query_dfm, rest_dfm,
     margin = "documents",

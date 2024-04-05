@@ -58,7 +58,7 @@ server <- function(id) {
     gargoyle::init("start_recommend_event")
     
     data <- load_data("data/dataset_goodreads_filtered.csv")
-    corp_dfm <- readRDS("data/ref_with_reviews_corp_tfidf.rds")
+    corp_dfm <- readRDS("data/ref_corp_tfidf.rds")
     #spacy_install()
     selected_books_titles <- mod_search_books$server("search_books", data$title, data$image_url)
     mod_data_analysis$server("data_analysis")

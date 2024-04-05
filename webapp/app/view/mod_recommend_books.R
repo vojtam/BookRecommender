@@ -51,8 +51,7 @@ server <- function(id, corp_dfm, query_book_titles, data_tab, how_many, simil_me
     observeEvent(gargoyle::watch("start_recommend_event"), {
       req(query_book_titles())
       print(query_book_titles())
-      browser()
-      titles <- get_recommendations(corp_dfm, query_book_titles(), simil_metrics, how_many)
+      titles <- get_recommendations(corp_dfm, query_book_titles(), input$genre_selector, simil_metrics, how_many)
       recommends_tab <- parse_recommendations(titles, data_tab)
       book_recommends_tab(recommends_tab)
     })
