@@ -46,21 +46,23 @@ books_cosine_similarity <- function(book_id1, book_id2) {
 
 # find similar books
 get_similar_books <- function(book_id, n) {
-  df <- data.frame(BOOK_IDS)
-  df$similarity <- map(df$BOOK_IDS, \(df_book_id) books_cosine_similarity(df_book_id, book_id))
+  books <- BOOK_IDS
+  df <- data.frame(books)
+  df$similarity <- map(df$books, \(df_book_id) books_cosine_similarity(df_book_id, book_id))
   df <- df[which(!is.na(df$similarity)),]
   df <- as.data.frame(lapply(df, unlist))
   ordered <- df[order(df$similarity, decreasing = TRUE),]
-  return(ordered$book_ids[2:n])
+  return(ordered$books[2:(n + 1)])
 }
 
-list_similar_books <- function(book_id, n) {
-  similar_book_ids <- strtoi(get_similar_books(book_id, n))
-  titles <- c(DATA_BOOKS |> filter(book_id == strtoi(book_id)) |> select(title))
+list_similar_books <- function(target_book_id, n) {
+  similar_book_ids <- strtoi(get_similar_books(target_book_id, n))
+  print(similar_book_ids)
+  titles <- c(DATA_BOOKS |> filter(book_id == strtoi(target_book_id)) |> select(title))
   for (similar_book_id in similar_book_ids) {
     titles <- append(titles, DATA_BOOKS |> filter(book_id == strtoi(similar_book_id)) |> select(title))
   }
-  return(titles)
+  print(titles)
 }
 
 
