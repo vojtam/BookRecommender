@@ -80,8 +80,7 @@
   align-items: center;
   flex-wrap: wrap;
   margin-top: 2rem;
-  width: 85vw;
-  
+  width: 80vw;
   
 }
 
@@ -232,4 +231,11 @@
 .img-gallery {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+label.checkbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
