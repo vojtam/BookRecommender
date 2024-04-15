@@ -1,0 +1,342 @@
+---
+title: "models"
+author: "Vojtěch Máčala, Anna Hýsková, Karolína Rusnačková"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    theme: cerulean
+    toc: yes
+    toc_float:
+      collapsed: true
+---
+
+```{r, include=FALSE}
+library(dplyr)
+library(ggplot2)
+library(tibble)
+library(tidyr)
+library(caret)
+library(stringr)
+library(reshape2)
+library(Matrix)
+library(recommenderlab)
+library(data.table)
+library(scales)
+library(ggthemes)
+library(cowplot)
+```
+
+## Load Data
+```{r}
+ratings <- read.csv(file = "data/reviews_tab_filtered.csv", sep = ",", dec = ",") |> mutate(
+  user_id = as.numeric(factor(user_id))
+)
+
+books <- read.csv(file = "data/dataset_goodreads_filtered.csv", sep = ",", dec = ",") |>
+  dplyr::select(title,book_id,genre)
+
+books_ratings <- left_join(ratings, books, by = "book_id") |> select(book_id, user_id, rating)
+str(books_ratings)
+```
+We will only retain users with 10 and more ratings
+```{r}
+book_ratings_count <- table(books_ratings$book_id)
+user_ratings_count <- table(books_ratings$user_id)
+
+books_with_at_least_10_ratings <- names(book_ratings_count[book_ratings_count >= 10])
+users_with_at_least_10_ratings <- names(user_ratings_count[user_ratings_count >= 10])
+
+books_ratings <- books_ratings[books_ratings$user_id %in% users_with_at_least_10_ratings, ]
+books_ratings <- books_ratings[books_ratings$book_id %in% books_with_at_least_10_ratings, ]
+books_ratings <- books_ratings[complete.cases(books_ratings$user_id, books_ratings$book_id), ]
+```
+
+```{r}
+num_user_id <- books_ratings$user_id %>% unique %>% length
+num_book <- books_ratings$book_id %>% unique %>% length
+
+sprintf("Number of ratings: %d", dim(books_ratings)[1])
+sprintf("Number of users: %d", num_user_id)
+sprintf("Number of books: %d", num_book)
+```
+Not enough memory :( We will work only with a small subset
+```{r}
+n <- 300
+
+first_n_users <- books_ratings$user_id %>% unique %>% head(n)
+books_ratings <- books_ratings[books_ratings$user_id %in% first_n_users, ]
+
+str(books_ratings)
+nrow(books_ratings)
+```
+User-Book Format
+```{r}
+ratings_filtered <- books_ratings |> reshape2::dcast(user_id ~ book_id,value.var = "rating")
+rownames(ratings_filtered) <- ratings_filtered$user_id
+ratings_filtered <- ratings_filtered[, -1]
+str(ratings_filtered)
+```
+Transformation into a RealRatingMatrix (contains NAs)
+```{r}
+ratings_mat <- as.matrix(ratings_filtered)
+ratings_mat <- as(ratings_mat, 'realRatingMatrix')
+
+dim(ratings_mat)
+```
+Train Test Split
+```{r}
+set.seed(123)
+
+split_data <- evaluationScheme(ratings_mat, method="split", train=0.8, given=3, goodRating=3)
+```
+# Simple Naive Predictors
+```{r}
+ratings_train <- getRatingMatrix(getData(split_data, "train"))
+ratings_train <- as(ratings_train, "matrix")
+ratings_train <- as.data.frame(ratings_train)
+ratings_train$user_id <- rownames(ratings_train)
+ratings_train <- pivot_longer(ratings_train, cols = -user_id, names_to = "book_id", values_to = "rating")
+
+ratings_val <- getRatingMatrix(getData(split_data, "train"))
+ratings_val <- as(ratings_val, "matrix")
+ratings_val <- as.data.frame(ratings_val)
+ratings_val$user_id <- rownames(ratings_val)
+ratings_val <- pivot_longer(ratings_val, cols = -user_id, names_to = "book_id", values_to = "rating")
+```
+```{r}
+mu <- mean(ratings_train$rating)  # grand mean
+y_hat_mean <- rep(mu, nrow(ratings_val))
+
+evaluation <- tibble(Model = "Naive",
+                      MAE = Metrics::mae(ratings_val$rating, y_hat_mean),
+                      MSE = Metrics::mse(ratings_val$rating, y_hat_mean),
+                      RMSE = Metrics::rmse(ratings_val$rating, y_hat_mean))
+print(evaluation)
+```
+## Adding bias
+```{r}
+b_i <- ratings_train |> group_by(book_id) |> 
+  dplyr::summarize(b_i = mean(rating - mu))
+```
+```{r}
+y_hat_b_i <- mu + ratings_val |> left_join(b_i, by = "book_id") %>% .$b_i
+
+evaluation <- bind_rows(evaluation,
+                        tibble(Model = "Naive (mean + item bias)",
+                               MAE = Metrics::mae(ratings_val$rating, y_hat_b_i),
+                               MSE = Metrics::mse(ratings_val$rating, y_hat_b_i),
+                               RMSE = Metrics::rmse(ratings_val$rating, y_hat_b_i)))
+print(evaluation)
+```
+
+```{r}
+b_u <- ratings_train |> left_join(b_i, by = 'book_id') |> group_by(user_id) |>
+  summarize(b_u = mean(rating - mu - b_i))
+```
+```{r}
+y_hat_b_u <- ratings_val |> 
+  left_join(b_i, by='book_id') |> 
+  left_join(b_u, by='user_id') |>
+  mutate(y_hat = mu + b_i + b_u) %>% .$y_hat
+
+evaluation <- bind_rows(evaluation, 
+                        tibble(Model = "Naive (mean + book and user bias)",
+                               MAE = Metrics::mae(ratings_val$rating, y_hat_b_u),
+                               MSE = Metrics::mse(ratings_val$rating, y_hat_b_u),
+                               RMSE = Metrics::rmse(ratings_val$rating, y_hat_b_u)))
+print(evaluation)
+```
+With Regularization
+```{r}
+regularization <- function(lambda, train, test){
+  mu <- mean(train$rating)
+
+  b_i <- train|> 
+    group_by(book_id) |> 
+    dplyr::summarize(b_i = sum(rating - mu) / (n() + lambda))
+  
+  b_u <- train |> 
+    left_join(b_i, by="book_id") |> 
+    group_by(user_id) |> 
+    dplyr::summarize(b_u = sum(rating - mu - b_i) / (n() + lambda))
+
+  predicted_ratings <- test |> 
+    left_join(b_i, by = 'book_id') |> 
+    left_join(b_u, by = "user_id") |> 
+    mutate(pred = mu + b_i + b_u) |> 
+    pull(pred)
+  
+  return(Metrics::rmse(predicted_ratings, test$rating))
+}
+```
+
+```{r}
+lambdas <- seq(0.0, 10, 0.25)
+lambdas_rmse <- sapply(lambdas,
+                       function(lambda) regularization(train = ratings_train, test = ratings_val, lambda = lambda))
+
+lambdas_tibble <- tibble(Lambda = lambdas, RMSE = lambdas_rmse)
+```
+```{r}
+lambdas_tibble <- tibble(Lambda = lambdas, RMSE = unlist(lambdas_rmse))
+print(lambdas_tibble)
+```
+
+```{r}
+lambdas_tibble |>
+  ggplot(aes(x = Lambda, y = RMSE)) +
+  geom_point() +
+  ggtitle("Lambda's effect on RMSE") +
+  xlab("Lambda") +
+  ylab("RMSE") +
+  scale_y_continuous(n.breaks = 6, labels = comma) +
+  scale_x_continuous(n.breaks = 10) +
+  theme(axis.title.x = element_text(vjust = -5, face = "bold"), 
+        axis.title.y = element_text(vjust = 10, face = "bold"), 
+        plot.margin = margin(0.7, 0.5, 1, 1.2, "cm"))
+
+
+```
+```{r}
+lambda <- lambdas[which.min(lambdas_rmse)]
+lambda
+```
+## Model-Based Recommenders
+! [Recommenders](recommenders.png)
+```{r}
+recommenderRegistry$get_entries(dataType = "realRatingMatrix") %>% 
+  names()
+```
+## SVDF
+```{r}
+book_reco_SVDF <- Recommender(getData(split_data, "train"), "SVDF", parameter = list(normalize = "Z-score", verbose = TRUE))
+predictions_SVDF <- predict(book_reco_SVDF, getData(split_data, "known"), type="ratings")  
+
+acc_list <- calcPredictionAccuracy(predictions_SVDF, getData(split_data, "unknown"))
+total_list <- c(algorithm = "SVDF", acc_list)
+total_list <- total_list[sapply(total_list, function(x) !is.null(x))]
+
+table_SVDF <- data.frame(as.list(total_list))
+```
+Imputation of the missing values for other models (NAs are replaced by column medians)
+```{r}
+impute_median <- function(x){
+   x[is.na(x)] = median(x, na.rm=TRUE) 
+   return(x)
+}
+ratings_filtered_impute <- apply(ratings_filtered, 2, impute_median) |> as.data.frame()
+```
+```{r}
+ratings_mat <- as.matrix(ratings_filtered_impute)
+ratings_mat <- as(ratings_mat, 'realRatingMatrix')
+```
+## Train Test Split (the same)
+```{r}
+set.seed(123)
+
+split_data <- evaluationScheme(ratings_mat, method="split", train=0.8, given=3, goodRating=3)
+```
+## UBCF 
+```{r}
+book_reco_UBCF <- Recommender(getData(split_data, "train"), "UBCF", parameter = list(normalize = NULL, method="Cosine"))
+predictions_ubcf <- predict(book_reco_UBCF, getData(split_data, "known"), type="ratings") 
+
+acc_list <- calcPredictionAccuracy(predictions_ubcf, getData(split_data, "unknown"))
+total_list <- c(algorithm = "UBCF", acc_list)
+total_list <- total_list[sapply(total_list, function(x) !is.null(x))]
+
+table_UBCF <- data.frame(as.list(total_list))
+```
+## UBCF Normalized
+```{r}
+book_reco_UBCF_centered <- Recommender(getData(split_data, "train"), "UBCF", parameter = list(normalize = "center", method="Cosine"))
+predictions_UBCF_centered <- predict(book_reco_UBCF_centered, getData(split_data, "known"), type="ratings")  
+
+acc_list <- calcPredictionAccuracy(predictions_UBCF_centered, getData(split_data, "unknown"))
+total_list <- c(algorithm = "UBCF Normalized", acc_list)
+total_list <- total_list[sapply(total_list, function(x) !is.null(x))]
+
+table_UBCF_centered <- data.frame(as.list(total_list))
+```
+```{r}
+rbind(table_UBCF_centered, table_UBCF, table_SVDF)
+```
+```{r}
+predictions_SVDF@data[0:9, 1001:1008]
+```
+```{r}
+predictions_ubcf@data[0:9, 1001:1008]
+```
+```{r}
+predictions_UBCF_centered@data[0:9, 1001:1008]
+```
+EXAMPLE
+```{r}
+select_user <- ratings_filtered[65, ]
+
+select_user_ids <- colnames(select_user)[!is.na(select_user)]
+select_user_ids <- lapply(select_user_ids, as.numeric)
+select_user_titles <- books[books$book_id %in% select_user_ids, "title"]
+
+print(select_user_titles)
+```
+
+```{r}
+select_user_mat <- as.matrix(select_user)
+select_user_mat <- as(select_user_mat, 'realRatingMatrix')
+```
+```{r}
+predict_SVDF <- predict(book_reco_SVDF, 
+                       select_user_mat,
+                       type = "topNList",
+                       n = 10
+                       )
+
+predict_SVDF
+```
+```{r}
+predict_SVDF_list <- as(predict_SVDF, 'list')
+predict_SVDF_list <- lapply(predict_SVDF_list, as.numeric)
+predict_SVDF_df <- as.data.frame(predict_SVDF_list)
+names(predict_SVDF_df) <- "book_id"
+```
+```{r}
+recommendations_SVDF <- merge(predict_SVDF_df, books, by = "book_id")
+print(recommendations_SVDF$title)
+```
+```{r}
+predict_ubcf <- predict(book_reco_UBCF, 
+                       select_user_mat,
+                       type = "topNList",
+                       n = 10
+                       )
+
+predict_ubcf
+```
+```{r}
+predict_ubcf_list <- as(predict_ubcf, 'list')
+predict_ubcf_list <- lapply(predict_ubcf_list, as.numeric)
+predict_ubcf_df <- as.data.frame(predict_ubcf_list)
+names(predict_ubcf_df) <- "book_id"
+
+recommendations_ubcf <- merge(predict_ubcf_df, books, by = "book_id")
+print(recommendations_ubcf$title)
+```
+```{r}
+predict_ubcf_centered <- predict(book_reco_UBCF_centered, 
+                       select_user_mat,
+                       type = "topNList",
+                       n = 10
+                       )
+
+predict_ubcf_centered
+```
+```{r}
+predict_ubcf_centered_list <- as(predict_ubcf_centered, 'list')
+predict_ubcf_centered_list <- lapply(predict_ubcf_centered_list, as.numeric)
+predict_ubcf_centered_df <- as.data.frame(predict_ubcf_centered_list)
+names(predict_ubcf_centered_df) <- "book_id"
+
+recommendations_ubcf_centered <- merge(predict_ubcf_centered_df, books, by = "book_id")
+print(recommendations_ubcf_centered$title)
+```
