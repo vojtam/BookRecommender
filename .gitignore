@@ -8,3 +8,6 @@
 HuggingFaceDeployment/
 
 **/node_modules/
+
+
+data/user_ratings_all.csv
