@@ -43,6 +43,10 @@
 
 }
 
+.select_books_input_container > div.form-group {
+  width: 75vw;
+}
+
 .vscomp-options-container {
   max-height: 420px !important;
 }
@@ -57,6 +61,8 @@
 
 .main {
   height: 95vh;
+  margin: 0;
+  padding: 3rem 0 1rem 0;
 }
 
 .main-container {
@@ -88,6 +94,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 1rem;
   flex-direction: column;
   width: 300px;
   margin-bottom: 1rem;
@@ -240,3 +247,13 @@ label.checkbtn {
   justify-content: center;
 }
 
+
+.btn-group {
+  flex-direction: column;
+}
+
+@media (min-width: 960px) {
+  .btn-group {
+    flex-direction: row;
+  }
+}
