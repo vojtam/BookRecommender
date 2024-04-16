@@ -57,7 +57,6 @@ get_similar_books <- function(book_id, n) {
 
 list_similar_books <- function(target_book_id, n) {
   similar_book_ids <- strtoi(get_similar_books(target_book_id, n))
-  print(similar_book_ids)
   titles <- c(DATA_BOOKS |> filter(book_id == strtoi(target_book_id)) |> select(title))
   for (similar_book_id in similar_book_ids) {
     titles <- append(titles, DATA_BOOKS |> filter(book_id == strtoi(similar_book_id)) |> select(title))
@@ -69,6 +68,10 @@ list_similar_books <- function(target_book_id, n) {
 # compute for all
 create_similarity_matrix <- function() {
   similarity_matrix <- matrix(nrow = length(BOOK_IDS), ncol = length(BOOK_IDS), dimnames = list(BOOK_IDS, BOOK_IDS))
+  
+  # TODO: create all pairs, map over the list and apply the function to each pair
+  pairs <- combn(BOOK_IDS, 2, simplify = F)
+  
   for (row in BOOK_IDS) {
     for (col in BOOK_IDS) {
       if (is.na(similarity_matrix[row, col])) {
@@ -88,7 +91,7 @@ main <- function() {
 }
 
 
-list_similar_books("33", 15)
+list_similar_books("186074", 15)
 
 
 main()
