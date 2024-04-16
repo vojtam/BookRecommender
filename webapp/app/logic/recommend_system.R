@@ -44,8 +44,10 @@ spacy_pipeline <- function(corp) {
 #' export
 get_recommendations <- function(corp_dfm, query_book_titles, genres, simil_method = "cosine", how_many) {
   query_dfm <- dfm_subset(corp_dfm, docname_ %in% query_book_titles)
-  rest_dfm <- corp_dfm[grep(genres, paste(docvars(corp_dfm)$genres)),]
-  rest_dfm <- dfm_subset(rest_dfm, !docname_ %in% query_book_titles)
+  if (!is.null(genres)) {
+    corp_dfm <- corp_dfm[grep(genres, paste(docvars(corp_dfm)$genres)),]
+  }
+  rest_dfm <- dfm_subset(corp_dfm, !docname_ %in% query_book_titles)
   
 
   tstat <- textstat_simil(
@@ -70,11 +72,3 @@ parse_recommendations <- function(rec_book_names, data_tab) {
   return(subset_books)
 }
 
-# hp3 <- dfm_subset(corp_dfm, docname_ %in% "A Game of Thrones (A Song of Ice and Fire, #1)")
-# tstat <- textstat_simil(hp3, corp_dfm,
-#                         margin = "documents", method = "ejaccard")
-# stat_list <- as.list(tstat)
-# ordered <- sort(unlist(stat_list), decreasing = TRUE)
-# top_ten <- head(ordered, n = 10)
-# names(top_ten) <- names(top_ten) |> gsub(pattern = "\\..*$", replacement = "")
-# top_ten
