@@ -39,16 +39,16 @@ books <- read.csv(file = "data/dataset_goodreads_filtered.csv", sep = ",", dec =
 books_ratings <- left_join(ratings, books, by = "book_id") |> select(book_id, user_id, rating)
 str(books_ratings)
 ```
-We will only retain users with 10 and more ratings
+We will only retain users and books with 10 and more ratings
 ```{r}
-book_ratings_count <- table(books_ratings$book_id)
-user_ratings_count <- table(books_ratings$user_id)
+book_counts <- table(books_ratings$book_id)
+user_counts <- table(books_ratings$user_id)
 
-books_with_at_least_10_ratings <- names(book_ratings_count[book_ratings_count >= 10])
-users_with_at_least_10_ratings <- names(user_ratings_count[user_ratings_count >= 10])
+books_to_keep <- names(book_counts[book_counts >= 10])
+users_to_keep <- names(user_counts[user_counts >= 10])
 
-books_ratings <- books_ratings[books_ratings$user_id %in% users_with_at_least_10_ratings, ]
-books_ratings <- books_ratings[books_ratings$book_id %in% books_with_at_least_10_ratings, ]
+books_ratings <- books_ratings[books_ratings$user_id %in% users_to_keep, ]
+books_ratings <- books_ratings[books_ratings$book_id %in% books_to_keep, ]
 books_ratings <- books_ratings[complete.cases(books_ratings$user_id, books_ratings$book_id), ]
 ```
 
@@ -106,6 +106,10 @@ total_list <- total_list[sapply(total_list, function(x) !is.null(x))]
 
 table_SVDF <- data.frame(as.list(total_list))
 ```
+Saving the model
+```{r}
+saveRDS(book_reco_SVDF, file = "svdf.rds")
+```
 Imputation of the missing values for other models (NAs are replaced by column medians)
 ```{r}
 impute_median <- function(x){
@@ -135,6 +139,10 @@ total_list <- total_list[sapply(total_list, function(x) !is.null(x))]
 
 table_UBCF <- data.frame(as.list(total_list))
 ```
+Saving the model
+```{r}
+saveRDS(book_reco_UBCF, file = "ubcf.rds")
+```
 ## UBCF Normalized
 ```{r}
 book_reco_UBCF_centered <- Recommender(getData(split_data, "train"), "UBCF", parameter = list(normalize = "center", method="Cosine"))
@@ -145,6 +153,10 @@ total_list <- c(algorithm = "UBCF Normalized", acc_list)
 total_list <- total_list[sapply(total_list, function(x) !is.null(x))]
 
 table_UBCF_centered <- data.frame(as.list(total_list))
+```
+Saving the model
+```{r}
+saveRDS(book_reco_UBCF_centered, file = "ubcf_normalized.rds")
 ```
 ```{r}
 rbind(table_UBCF_centered, table_UBCF, table_SVDF)
