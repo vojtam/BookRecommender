@@ -1,5 +1,5 @@
 box::use(
-  shiny[moduleServer, NS, tags, req, div, actionButton, reactiveVal, tagList, observeEvent, uiOutput, renderUI],
+  shiny[moduleServer, textOutput, renderText, NS, tags, req, div, actionButton, reactiveVal, tagList, observeEvent, uiOutput, renderUI],
   shinyWidgets[checkboxGroupButtons],
   purrr[pmap],
 
@@ -30,6 +30,7 @@ ui <- function(id) {
                   ),
       justified = TRUE,
     ),
+    textOutput(ns("mytext1")),
     
     
     actionButton(ns("get_recommend_btn"), "Get Recommendations"),
@@ -54,6 +55,10 @@ server <- function(id, corp_dfm, query_book_titles, data_tab, how_many, simil_me
       titles <- get_recommendations(corp_dfm, query_book_titles(), input$genre_selector, simil_metrics, how_many)
       recommends_tab <- parse_recommendations(titles, data_tab)
       book_recommends_tab(recommends_tab)
+    })
+
+    output$mytext1 <- renderText({
+      return(input$myval)
     })
     
     output$bookCardsOutput <- renderUI({

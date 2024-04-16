@@ -1,10 +1,9 @@
 const { useState } = React;
 import Swal from 'sweetalert2'
-import ReactDOM from 'react-dom/client'
 import withReactContent from 'sweetalert2-react-content'
 import { FaStar, FaGoodreads } from "react-icons/fa";
-
 import { GenreTag } from './GenreTag';
+import Heart from '@react-sandbox/heart'
 
 
 const showDesc = (title, message) => {
@@ -20,6 +19,9 @@ const showDesc = (title, message) => {
 }
 
 export default function BookCard({ title, author_name, avg_rating, genres, description, imageUrl, url }) {
+
+
+  const [active, setActive] = useState(false)
   return (
     <div className="book-card__container">
       <div className="book-card__cover">
@@ -29,19 +31,19 @@ export default function BookCard({ title, author_name, avg_rating, genres, descr
       <div className="book-card__info-section">
         <div className="book-card__info-section__genre-section">
           {genres.map((genre) => (
-            <GenreTag genre={genre}/>
+            <GenreTag genre={genre} />
           ))}
         </div>
-    
-            
+
+
         <h3 className="book-card__info-section__title">{title}</h3>
         <p className="book-card__info-section__author">{author_name}</p>
         <div className="book-card__info-section__rating">
           <FaStar className='book-card__info-section__rating-icon' />
           <span className='book-card__info-section__rating-icon-rating'>{avg_rating}</span>
-          
+
           <a href={url} target="_blank" rel="noopener noreferrer">
-            <FaGoodreads className='book-card__info-section__rating-icon'/>
+            <FaGoodreads className='book-card__info-section__rating-icon' />
           </a>
         </div>
         <button
@@ -50,7 +52,17 @@ export default function BookCard({ title, author_name, avg_rating, genres, descr
         >
           Show Description
         </button>
-      </div>
+        <Heart
+        width={34}
+        height={34}
+        active={active}
+        onClick={() => {
+          Shiny.setInputValue("app-recommend_books-myval",title)
+          console.log()
+          setActive(!active)} 
+        }
+      />
+         </div>
     </div>
   );
 }

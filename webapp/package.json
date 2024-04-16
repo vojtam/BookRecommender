@@ -1,7 +1,16 @@
 {
   "dependencies": {
+    "@anatoliygatt/heart-switch": "^1.0.13",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@react-sandbox/heart": "^1.1.0",
+    "framer-motion": "^11.1.1",
+    "react-heart": "^1.0.6",
     "react-icons": "^5.0.1",
     "sweetalert2": "^11.10.6",
     "sweetalert2-react-content": "^5.0.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
   }
 }
