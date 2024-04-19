@@ -42,7 +42,7 @@ spacy_pipeline <- function(corp) {
 }
 
 #' export
-get_recommendations <- function(corp_dfm, query_book_titles, genres, simil_method = "cosine", how_many) {
+get_recommendations <- function(corp_dfm, data_tab, query_book_titles, genres, simil_method = "cosine", how_many) {
   query_dfm <- dfm_subset(corp_dfm, docname_ %in% query_book_titles)
   if (!is.null(genres)) {
     corp_dfm <- corp_dfm[grep(genres, paste(docvars(corp_dfm)$genres)),]
@@ -57,7 +57,8 @@ get_recommendations <- function(corp_dfm, query_book_titles, genres, simil_metho
   ) |>
   as.data.frame()
   setorderv(tstat, cols = c(simil_method), order = -1)
-  return(tstat[1:how_many,]$document2)
+  recommendations <- parse_recommendations(tstat[1:how_many,]$document2, data_tab)
+  return(recommendations)
 }
 
 #' export
@@ -69,6 +70,7 @@ parse_recommendations <- function(rec_book_names, data_tab) {
     select(
       title, average_rating, description, url, image_url, genres, author_name
     )
+  subset_books$model <- "TFIDF"
   return(subset_books)
 }
 

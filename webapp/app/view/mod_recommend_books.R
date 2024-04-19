@@ -1,5 +1,21 @@
 box::use(
-  shiny[moduleServer, textOutput, renderText, NS, tags, req, div, actionButton, reactiveVal, tagList, observeEvent, uiOutput, renderUI],
+  shiny[
+    moduleServer,
+    textOutput,
+    renderText,
+    NS,
+    tags,
+    req,
+    div,
+    actionButton,
+    reactiveVal,
+    tagList,
+    observeEvent,
+    uiOutput,
+    renderUI
+  ],
+  dplyr[select],
+  methods[as],
   shinyWidgets[checkboxGroupButtons],
   purrr[pmap],
 
@@ -7,6 +23,7 @@ box::use(
 
 box::use(
   app/logic/recommend_system[parse_recommendations, get_recommendations],
+  app/logic/kaja_model[SVD_predict],
   app/view/react[BookCard],
 )
 
@@ -15,7 +32,6 @@ ui <- function(id) {
   ns <- NS(id)
   div(
     class = "flex-center",
-    
     checkboxGroupButtons(
       inputId = ns("genre_selector"),
       label = "Choose genres to be included:", 
@@ -41,7 +57,7 @@ ui <- function(id) {
 }
 
 #' @export
-server <- function(id, corp_dfm, query_book_titles, data_tab, how_many, simil_metrics) {
+server <- function(id, ratings_tab, SVD_model, corp_dfm, query_book_titles, data_tab, how_many, simil_metrics, method = "SVD") {
   moduleServer(id, function(input, output, session) {
     book_recommends_tab <- reactiveVal()
     
@@ -51,10 +67,26 @@ server <- function(id, corp_dfm, query_book_titles, data_tab, how_many, simil_me
     
     observeEvent(gargoyle::watch("start_recommend_event"), {
       req(query_book_titles())
-      print(query_book_titles())
-      titles <- get_recommendations(corp_dfm, query_book_titles(), input$genre_selector, simil_metrics, how_many)
-      recommends_tab <- parse_recommendations(titles, data_tab)
-      book_recommends_tab(recommends_tab)
+      if (method == "SVD") {
+        recommendations <- SVD_predict(data_tab, query_book_titles(), ratings_tab, SVD_model, select_user_mat, how_many = how_many)
+        book_recommends_tab(recommendations)
+      }
+      else if (method == "TFIDF") {
+        recommendations <- get_recommendations(corp_dfm, data_tab, query_book_titles(), input$genre_selector, "cosine", how_many)
+        book_recommends_tab(recommendations)
+      }
+      else {
+        parts <- split_number(how_many, 3)
+        
+        SVD_recommends <- SVD_predict(data_tab, query_book_titles(), ratings_tab, SVD_model, select_user_mat, how_many = parts[1])
+        tfidf_recommends <- get_recommendations(corp_dfm, data_tab, query_book_titles(), input$genre_selector, "cosine", parts[2])
+        random <- get_random_titles(data_tab, parts[3])
+        
+        all_recs <- rbind(SVD_recommends, tfidf_recommends, random)
+        all_recs <- all_recs[sample(1:nrow(all_recs)), ] 
+        book_recommends_tab(all_recs)
+        
+      }
     })
 
     output$mytext1 <- renderText({
@@ -68,7 +100,7 @@ server <- function(id, corp_dfm, query_book_titles, data_tab, how_many, simil_me
   })
 }
 
-create_card <- function(title, average_rating, description, url, image_url, genres, author_name) {
+create_card <- function(title, average_rating, description, url, image_url, genres, author_name, model) {
   BookCard(title = title,
            avg_rating = average_rating,
            genres = as.list(genres),
@@ -76,6 +108,36 @@ create_card <- function(title, average_rating, description, url, image_url, genr
            author_name = author_name,
            imageUrl = image_url,
            url = url,
+           model = model
 
   )
+}
+
+split_number <- function(number, n){
+  # Calculate the base value for each part (integer division)
+  base_part = number %/% n
+  
+  # Initialize the result list
+  result = rep(base_part, n)
+  
+  # Distribute the remainder among the first n-1 elements
+  remainder = number %% n
+  i <- 1
+  for(one in rep(1, remainder)) {
+    result[[i]] <- result[[i]] + one
+    i <- i + 1
+  }
+  
+  return(result)
+}
+
+
+get_random_titles <- function(books_tab, how_many) {
+  rows <- sample(1:nrow(books_tab), how_many)
+  selected <- books_tab[rows,]
+  selected <- selected |>  dplyr::select(
+    title, average_rating, description, url, image_url, genres, author_name
+  )
+  selected$model <- "random"
+  return(selected)
 }
