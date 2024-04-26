@@ -18,7 +18,7 @@ const showDesc = (title, message) => {
   )
 }
 
-export default function BookCard({ title, author_name, avg_rating, genres, description, imageUrl, url }) {
+export default function BookCard({ title, author_name, avg_rating, genres, description, imageUrl, url, model }) {
 
 
   const [active, setActive] = useState(false)
@@ -57,7 +57,11 @@ export default function BookCard({ title, author_name, avg_rating, genres, descr
         height={34}
         active={active}
         onClick={() => {
-          Shiny.setInputValue("app-recommend_books-myval",title)
+          Shiny.setInputValue("app-recommend_books-myval", {
+            title: title,
+            model: model,
+            genres: genres
+          })
           console.log()
           setActive(!active)} 
         }

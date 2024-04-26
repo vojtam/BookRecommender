@@ -11,7 +11,7 @@ ui <- function(id) {
 }
 
 #' @export
-server <- function(id, book_titles, book_url_images) {
+server <- function(id, book_titles, book_url_images, book_ids) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
     
@@ -26,7 +26,7 @@ server <- function(id, book_titles, book_url_images) {
                                         <img class=\"booksearch__img\" src=\"%s\"/>
                                         <span class=\"booksearch__title\">%s</span>
                                      </div>", book_url_images, book_titles),
-                         value = book_titles) |> purrr::transpose(),
+                         value = book_ids) |> purrr::transpose(),
           multiple = TRUE,
           optionsCount = 6,
           search = TRUE,
