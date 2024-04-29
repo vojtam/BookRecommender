@@ -18,6 +18,7 @@ box::use(
   methods[as],
   shinyWidgets[checkboxGroupButtons],
   purrr[pmap],
+  data.table[data.table, fwrite]
 
 )
 
@@ -96,9 +97,17 @@ server <- function(id, ratings_tab, SVD_model, corp_dfm, item_item_df, query_boo
       }
     })
 
-    output$mytext1 <- renderText({
+    observeEvent(input$myval, {
       req(input$myval)
-      return(input$myval$model)
+      record <- input$myval
+      record_row <- data.table(
+        query_book_id = query_book_ids(),
+        recommended_title = record$title,
+        model = record$model,
+        datetime = date()
+      )
+      fwrite(record_row, "system_recommendations_log.csv", append = TRUE)
+      
     })
     
     output$bookCardsOutput <- renderUI({

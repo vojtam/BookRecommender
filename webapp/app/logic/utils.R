@@ -34,7 +34,7 @@ get_random_titles <- function(books_tab, how_many) {
 }
 
 #' @export
-parse_recommendations <- function(rec_book_ids, data_tab) {
+parse_recommendations <- function(rec_book_ids, data_tab, model) {
   subset_books <- data_tab |> 
     filter(
       book_id %in% rec_book_ids 
@@ -42,6 +42,6 @@ parse_recommendations <- function(rec_book_ids, data_tab) {
     select(
       title, average_rating, description, url, image_url, genres, author_name
     )
-  subset_books$model <- "TFIDF"
+  subset_books$model <- model
   return(subset_books)
 }

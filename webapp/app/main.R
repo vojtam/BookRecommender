@@ -6,6 +6,7 @@ box::use(
   waiter[useWaiter, autoWaiter, waiter_show, spin_fading_circles, waiter_hide, waiterShowOnLoad, waiter_on_busy],
   spacyr[spacy_install],
   feather[read_feather],
+  data.table[fread],
 )
 
 box::use(
@@ -55,7 +56,7 @@ server <- function(id) {
     # LOAD DATA ---------------------------------------------------------------
 
     data <- load_data("data/dataset_goodreads_filtered.csv")
-    item_item_df <- read_feather("data/item_item_df.feather")
+    item_item_df <- fread("data/item_to_item_similarity_dataframe_full.csv")
     user_ratings_tab <- readRDS("ratings_filtered.rds")
     corp_dfm <- readRDS("data/ref_corp_tfidf_new.rds")
     SVD_model <- readRDS("../svdf.rds")
@@ -94,25 +95,6 @@ server <- function(id) {
       )
       gargoyle::trigger("start_recommend_event")
     })
-
-    # observeEvent(input$simil_metrics, {
-    #   mod_recommend_books$server("recommend_books", corp_dfm, selected_books_titles, data, input$how_many_recommends_slider, input$simil_metrics)
-    #   gargoyle::trigger("start_recommend_event")
-    #
-    # })
-
-
-
-    # observeEvent(input$upload_goodreads, {
-    #   req(input$upload_goodreads)
-    #   user_data <- read.csv2(input$upload_goodreads$datapath, sep = ",")
-    #   user_data <- dplyr::filter(user_data,
-    #                              Book.Id %in% data$book_id,
-    #                              max(user_data$My.Rating) == user_data$My.Rating)
-    #   books <- reactiveVal(data[book_id %in% user_data$Book.Id]$title)
-    #   mod_recommend_books$server("recommend_books", corp_dfm, books, data, input$how_many_recommends_slider, input$simil_metrics)
-    #   gargoyle::trigger("start_recommend_event")
-    # })
   })
 }
 

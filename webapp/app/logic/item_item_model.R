@@ -16,11 +16,11 @@ get_item_item_recommendations <- function(item_item_df, data_tab, ids, how_many)
   
   result <- list()
   for (i in 1:length(distribution)) {
-    result <- append(result, rows[i,1:distribution[i]] |> as.vector())
+    result <- append(result, rows[i,which(colnames(item_item_df) == "X1"):distribution[i]] |> as.vector())
   }
   
   result <- result |> unlist()
-  return(parse_recommendations(result, data_tab))
+  return(parse_recommendations(result, data_tab, "ITEM-ITEM"))
 }
 
 

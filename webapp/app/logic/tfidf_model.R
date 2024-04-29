@@ -98,7 +98,7 @@ get_recommendations <- function(corp_dfm, data_tab, query_book_ids, genres, simi
   ) |>
   as.data.frame()
   setorderv(tstat, cols = c(simil_method), order = -1)
-  recommendations <- parse_recommendations(tstat[1:how_many,]$document2, data_tab)
+  recommendations <- parse_recommendations(tstat[1:how_many,]$document2, data_tab, "TFIDF")
   return(recommendations)
 }
 
