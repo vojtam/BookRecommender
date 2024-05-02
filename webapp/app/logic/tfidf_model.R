@@ -86,7 +86,8 @@ spacy_pipeline <- function(corp) {
 get_recommendations <- function(corp_dfm, data_tab, query_book_ids, genres, simil_method = "cosine", how_many) {
   query_dfm <- dfm_subset(corp_dfm, docname_ %in% query_book_ids)
   if (!is.null(genres)) {
-    corp_dfm <- corp_dfm[grep(genres, paste(docvars(corp_dfm)$genres)),]
+    genre_ids <- docvars(corp_dfm)[grepl(genres, paste(docvars(corp_dfm)$genres)),]$book_id
+    corp_dfm <- dfm_subset(corp_dfm, docname_ %in% genre_ids)
   }
   rest_dfm <- dfm_subset(corp_dfm, !docname_ %in% query_book_ids)
   
@@ -99,6 +100,14 @@ get_recommendations <- function(corp_dfm, data_tab, query_book_ids, genres, simi
   as.data.frame()
   setorderv(tstat, cols = c(simil_method), order = -1)
   recommendations <- parse_recommendations(tstat[1:how_many,]$document2, data_tab, "TFIDF")
+  # recommendations <- data_tab |> 
+  #   filter(
+  #     title %in% docvars(dfm_subset(rest_dfm, docname_ %in% tstat[1:how_many,]$document2))$title
+  #   ) |>
+  #   select(
+  #     title, average_rating, description, url, image_url, genres, author_name
+  #   )
+  # recommendations$model <- "TFIDF"
   return(recommendations)
 }
 

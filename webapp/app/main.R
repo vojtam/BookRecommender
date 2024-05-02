@@ -5,7 +5,6 @@ box::use(
   shinyWidgets[pickerInput],
   waiter[useWaiter, autoWaiter, waiter_show, spin_fading_circles, waiter_hide, waiterShowOnLoad, waiter_on_busy],
   spacyr[spacy_install],
-  feather[read_feather],
   data.table[fread],
 )
 
@@ -25,7 +24,7 @@ ui <- function(id) {
     fillable = FALSE,
     nav_panel(
       useWaiter(),
-      waiter_on_busy(html = tagList(div(class = "main-waiter", h3("Give me a second to read all those books..."), spin_fading_circles()))),
+      #waiter_on_busy(html = tagList(div(class = "main-waiter", h3("Give me a second to read all those books..."), spin_fading_circles()))),
       # waiterShowOnLoad(html = tagList(div(class = "main-waiter", h3("Give me a second to read all those books..."), spin_fading_circles()))),
       title = "Recommendations",
       tags$main(
@@ -57,9 +56,9 @@ server <- function(id) {
 
     data <- load_data("data/dataset_goodreads_filtered.csv")
     item_item_df <- fread("data/item_to_item_similarity_dataframe_full.csv")
-    user_ratings_tab <- readRDS("ratings_filtered.rds")
+    user_ratings_tab <- readRDS("data/ratings_filtered.rds")
     corp_dfm <- readRDS("data/ref_corp_tfidf_new.rds")
-    SVD_model <- readRDS("../svdf.rds")
+    SVD_model <- readRDS("data/svdf.rds")
     # spacy_install()
 
     selected_books_ids <- mod_search_books$server("search_books", data$title, data$image_url, data$book_id)

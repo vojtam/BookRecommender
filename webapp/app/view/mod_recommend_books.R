@@ -4,6 +4,7 @@ box::use(
     textOutput,
     renderText,
     NS,
+    h3,
     tags,
     req,
     div,
@@ -18,7 +19,8 @@ box::use(
   methods[as],
   shinyWidgets[checkboxGroupButtons],
   purrr[pmap],
-  data.table[data.table, fwrite]
+  data.table[data.table, fwrite],
+  waiter[Waiter, spin_fading_circles]
 
 )
 
@@ -70,6 +72,8 @@ server <- function(id, ratings_tab, SVD_model, corp_dfm, item_item_df, query_boo
     
     observeEvent(gargoyle::watch("start_recommend_event"), {
       req(query_book_ids())
+      waiter <- Waiter$new(html = tagList(div(class = "main-waiter", h3("Give me a second to read all those books..."), spin_fading_circles())))
+      waiter$show()
       if (method == "SVD") {
         recommendations <- SVD_predict(data_tab, query_book_ids(), ratings_tab, SVD_model, select_user_mat, how_many = how_many)
         book_recommends_tab(recommendations)
@@ -95,6 +99,7 @@ server <- function(id, ratings_tab, SVD_model, corp_dfm, item_item_df, query_boo
         book_recommends_tab(all_recs)
         
       }
+      waiter$hide()
     })
 
     observeEvent(input$myval, {

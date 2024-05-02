@@ -1,0 +1,41 @@
+query_book_id,recommended_title,model,datetime
+1128434,The Gunslinger,ITEM-ITEM,Mon Apr 29 16:21:30 2024
+1128434,The Gunslinger,ITEM-ITEM,Mon Apr 29 16:21:30 2024
+1128434,"Blood of Elves (The Witcher, #3)",ITEM-ITEM,Mon Apr 29 16:21:31 2024
+1128434,"Blood of Elves (The Witcher, #3)",ITEM-ITEM,Mon Apr 29 16:21:31 2024
+1128434,"The Lies of Locke Lamora (Gentleman Bastard, #1)",ITEM-ITEM,Mon Apr 29 16:21:45 2024
+1128434,"The Lies of Locke Lamora (Gentleman Bastard, #1)",ITEM-ITEM,Mon Apr 29 16:21:45 2024
+1128434,The Goblin Emperor,ITEM-ITEM,Mon Apr 29 16:21:54 2024
+1128434,The Goblin Emperor,ITEM-ITEM,Mon Apr 29 16:21:54 2024
+1128434,"Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch",ITEM-ITEM,Mon Apr 29 16:21:57 2024
+1128434,"Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch",ITEM-ITEM,Mon Apr 29 16:21:57 2024
+1128434,"Blood of Elves (The Witcher, #3)",TFIDF,Mon Apr 29 16:22:00 2024
+1128434,"Blood of Elves (The Witcher, #3)",TFIDF,Mon Apr 29 16:22:00 2024
+1128434,The Night Circus,ITEM-ITEM,Mon Apr 29 16:22:19 2024
+1128434,The Night Circus,ITEM-ITEM,Mon Apr 29 16:22:19 2024
+62530,"A Hat Full of Sky (Discworld, #32; Tiffany Aching, #2)",ITEM-ITEM,Mon Apr 29 16:23:20 2024
+62530,"A Hat Full of Sky (Discworld, #32; Tiffany Aching, #2)",ITEM-ITEM,Mon Apr 29 16:23:20 2024
+62530,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Mon Apr 29 16:23:21 2024
+62530,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Mon Apr 29 16:23:21 2024
+62530,"Men at Arms (Discworld, #15; City Watch #2)",TFIDF,Mon Apr 29 16:23:22 2024
+62530,"Men at Arms (Discworld, #15; City Watch #2)",TFIDF,Mon Apr 29 16:23:22 2024
+62530,"Night Watch (Discworld, #29; City Watch, #6)",ITEM-ITEM,Mon Apr 29 16:23:23 2024
+62530,"Night Watch (Discworld, #29; City Watch, #6)",ITEM-ITEM,Mon Apr 29 16:23:23 2024
+62530,"Jingo (Discworld, #21; City Watch, #4)",ITEM-ITEM,Mon Apr 29 16:23:25 2024
+62530,"Jingo (Discworld, #21; City Watch, #4)",ITEM-ITEM,Mon Apr 29 16:23:25 2024
+62530,"Reaper Man (Discworld, #11; Death, #2)",ITEM-ITEM,Mon Apr 29 16:23:26 2024
+62530,"Reaper Man (Discworld, #11; Death, #2)",ITEM-ITEM,Mon Apr 29 16:23:26 2024
+62530,"Witches Abroad (Discworld, #12; Witches #3)",ITEM-ITEM,Mon Apr 29 16:23:29 2024
+62530,"Witches Abroad (Discworld, #12; Witches #3)",ITEM-ITEM,Mon Apr 29 16:23:29 2024
+62530,Trouble with Trolls,TFIDF,Mon Apr 29 16:23:35 2024
+62530,Trouble with Trolls,TFIDF,Mon Apr 29 16:23:35 2024
+62530,"The Way of Kings (The Stormlight Archive, #1)",SVD,Mon Apr 29 16:23:37 2024
+62530,"The Way of Kings (The Stormlight Archive, #1)",SVD,Mon Apr 29 16:23:37 2024
+62530,"Going Postal (Discworld, #33; Moist von Lipwig, #1)",ITEM-ITEM,Mon Apr 29 16:23:38 2024
+62530,"Going Postal (Discworld, #33; Moist von Lipwig, #1)",ITEM-ITEM,Mon Apr 29 16:23:38 2024
+62530,"I Shall Wear Midnight (Discworld, #38; Tiffany Aching, #4)",ITEM-ITEM,Mon Apr 29 16:23:42 2024
+62530,"I Shall Wear Midnight (Discworld, #38; Tiffany Aching, #4)",ITEM-ITEM,Mon Apr 29 16:23:42 2024
+62530,"Lords and Ladies (Discworld, #14; Witches #4)",ITEM-ITEM,Mon Apr 29 16:23:44 2024
+62530,"Lords and Ladies (Discworld, #14; Witches #4)",ITEM-ITEM,Mon Apr 29 16:23:44 2024
+62530,"Stolen Songbird (The Malediction Trilogy, #1)",TFIDF,Mon Apr 29 16:23:54 2024
+62530,"Stolen Songbird (The Malediction Trilogy, #1)",TFIDF,Mon Apr 29 16:23:54 2024
