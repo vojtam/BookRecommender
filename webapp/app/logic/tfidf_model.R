@@ -20,7 +20,6 @@ create_ref_corpus <- function(data_tab, field) {
 
 
 spacy_pipeline <- function(corp) {
-  browser()
   res <- corp |> spacy_parse(nounphrase = TRUE) 
   res_tokens <- res |> 
     filter(

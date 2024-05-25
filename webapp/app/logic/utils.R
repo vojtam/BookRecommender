@@ -6,8 +6,7 @@ box::use(
 split_number <- function(number, n){
   # Calculate the base value for each part (integer division)
   base_part = number %/% n
-  
-  # Initialize the result list
+
   result = rep(base_part, n)
   
   # Distribute the remainder among the first n-1 elements
