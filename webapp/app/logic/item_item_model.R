@@ -16,7 +16,7 @@ get_item_item_recommendations <- function(item_item_df, data_tab, ids, how_many)
   
   result <- list()
   for (i in 1:length(distribution)) {
-    result <- append(result, rows[i,which(colnames(item_item_df) == "X1"):distribution[i]] |> as.vector())
+    result <- append(result, rows[i,which(colnames(item_item_df) == "X1"):(distribution[i]+2)] |> as.vector())
   }
   
   result <- result |> unlist()

@@ -1,41 +1,341 @@
 query_book_id,recommended_title,model,datetime
-1128434,The Gunslinger,ITEM-ITEM,Mon Apr 29 16:21:30 2024
-1128434,The Gunslinger,ITEM-ITEM,Mon Apr 29 16:21:30 2024
-1128434,"Blood of Elves (The Witcher, #3)",ITEM-ITEM,Mon Apr 29 16:21:31 2024
-1128434,"Blood of Elves (The Witcher, #3)",ITEM-ITEM,Mon Apr 29 16:21:31 2024
-1128434,"The Lies of Locke Lamora (Gentleman Bastard, #1)",ITEM-ITEM,Mon Apr 29 16:21:45 2024
-1128434,"The Lies of Locke Lamora (Gentleman Bastard, #1)",ITEM-ITEM,Mon Apr 29 16:21:45 2024
-1128434,The Goblin Emperor,ITEM-ITEM,Mon Apr 29 16:21:54 2024
-1128434,The Goblin Emperor,ITEM-ITEM,Mon Apr 29 16:21:54 2024
-1128434,"Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch",ITEM-ITEM,Mon Apr 29 16:21:57 2024
-1128434,"Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch",ITEM-ITEM,Mon Apr 29 16:21:57 2024
-1128434,"Blood of Elves (The Witcher, #3)",TFIDF,Mon Apr 29 16:22:00 2024
-1128434,"Blood of Elves (The Witcher, #3)",TFIDF,Mon Apr 29 16:22:00 2024
-1128434,The Night Circus,ITEM-ITEM,Mon Apr 29 16:22:19 2024
-1128434,The Night Circus,ITEM-ITEM,Mon Apr 29 16:22:19 2024
-62530,"A Hat Full of Sky (Discworld, #32; Tiffany Aching, #2)",ITEM-ITEM,Mon Apr 29 16:23:20 2024
-62530,"A Hat Full of Sky (Discworld, #32; Tiffany Aching, #2)",ITEM-ITEM,Mon Apr 29 16:23:20 2024
-62530,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Mon Apr 29 16:23:21 2024
-62530,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Mon Apr 29 16:23:21 2024
-62530,"Men at Arms (Discworld, #15; City Watch #2)",TFIDF,Mon Apr 29 16:23:22 2024
-62530,"Men at Arms (Discworld, #15; City Watch #2)",TFIDF,Mon Apr 29 16:23:22 2024
-62530,"Night Watch (Discworld, #29; City Watch, #6)",ITEM-ITEM,Mon Apr 29 16:23:23 2024
-62530,"Night Watch (Discworld, #29; City Watch, #6)",ITEM-ITEM,Mon Apr 29 16:23:23 2024
-62530,"Jingo (Discworld, #21; City Watch, #4)",ITEM-ITEM,Mon Apr 29 16:23:25 2024
-62530,"Jingo (Discworld, #21; City Watch, #4)",ITEM-ITEM,Mon Apr 29 16:23:25 2024
-62530,"Reaper Man (Discworld, #11; Death, #2)",ITEM-ITEM,Mon Apr 29 16:23:26 2024
-62530,"Reaper Man (Discworld, #11; Death, #2)",ITEM-ITEM,Mon Apr 29 16:23:26 2024
-62530,"Witches Abroad (Discworld, #12; Witches #3)",ITEM-ITEM,Mon Apr 29 16:23:29 2024
-62530,"Witches Abroad (Discworld, #12; Witches #3)",ITEM-ITEM,Mon Apr 29 16:23:29 2024
-62530,Trouble with Trolls,TFIDF,Mon Apr 29 16:23:35 2024
-62530,Trouble with Trolls,TFIDF,Mon Apr 29 16:23:35 2024
-62530,"The Way of Kings (The Stormlight Archive, #1)",SVD,Mon Apr 29 16:23:37 2024
-62530,"The Way of Kings (The Stormlight Archive, #1)",SVD,Mon Apr 29 16:23:37 2024
-62530,"Going Postal (Discworld, #33; Moist von Lipwig, #1)",ITEM-ITEM,Mon Apr 29 16:23:38 2024
-62530,"Going Postal (Discworld, #33; Moist von Lipwig, #1)",ITEM-ITEM,Mon Apr 29 16:23:38 2024
-62530,"I Shall Wear Midnight (Discworld, #38; Tiffany Aching, #4)",ITEM-ITEM,Mon Apr 29 16:23:42 2024
-62530,"I Shall Wear Midnight (Discworld, #38; Tiffany Aching, #4)",ITEM-ITEM,Mon Apr 29 16:23:42 2024
-62530,"Lords and Ladies (Discworld, #14; Witches #4)",ITEM-ITEM,Mon Apr 29 16:23:44 2024
-62530,"Lords and Ladies (Discworld, #14; Witches #4)",ITEM-ITEM,Mon Apr 29 16:23:44 2024
-62530,"Stolen Songbird (The Malediction Trilogy, #1)",TFIDF,Mon Apr 29 16:23:54 2024
-62530,"Stolen Songbird (The Malediction Trilogy, #1)",TFIDF,Mon Apr 29 16:23:54 2024
+186074,The Martian,ITEM-ITEM,Thu May  2 20:08:00 2024
+186074,"The Well of Ascension (Mistborn, #2)",ITEM-ITEM,Thu May  2 20:08:25 2024
+186074,"The Way of Kings (The Stormlight Archive, #1)",SVD,Thu May  2 20:08:29 2024
+186074,The Ocean at the End of the Lane,ITEM-ITEM,Thu May  2 20:08:32 2024
+186074,The Night Circus,ITEM-ITEM,Thu May  2 20:08:35 2024
+186074,"Catching Fire (The Hunger Games, #2)",ITEM-ITEM,Thu May  2 20:08:41 2024
+186074,"The Way of Kings (The Stormlight Archive, #1)",ITEM-ITEM,Thu May  2 20:08:47 2024
+186074,"A Storm of Swords (A Song of Ice and Fire, #3)",ITEM-ITEM,Thu May  2 20:09:14 2024
+186074,"The Final Empire (Mistborn, #1)",ITEM-ITEM,Thu May  2 20:09:31 2024
+186074,"Harry Potter and the Goblet of Fire (Harry Potter, #4)",TFIDF,Thu May  2 20:09:37 2024
+186074,"The Hunger Games (The Hunger Games, #1)",ITEM-ITEM,Thu May  2 20:09:39 2024
+186074,Uprooted,ITEM-ITEM,Thu May  2 20:09:53 2024
+186074,A Monster Calls,ITEM-ITEM,Thu May  2 20:10:06 2024
+186074,"The Hero of Ages (Mistborn, #3)",ITEM-ITEM,Thu May  2 20:10:10 2024
+186074,"Sourcery (Discworld, #5; Rincewind #3)",TFIDF,Thu May  2 20:10:21 2024
+186074,"Words of Radiance (The Stormlight Archive, #2)",ITEM-ITEM,Thu May  2 20:10:25 2024
+186074,"The Lord of the Rings (The Lord of the Rings, #1-3)",SVD,Thu May  2 20:10:28 2024
+186074,"The Wise Man's Fear (The Kingkiller Chronicle, #2)",ITEM-ITEM,Thu May  2 20:10:41 2024
+186074,"The Wise Man's Fear (The Kingkiller Chronicle, #2)",TFIDF,Thu May  2 20:10:45 2024
+186074,The Book Thief,ITEM-ITEM,Thu May  2 20:10:55 2024
+186074,"Words of Radiance (The Stormlight Archive, #2)",SVD,Thu May  2 20:11:00 2024
+186074,"Harry Potter and the Philosopher's Stone (Harry Potter, #1)",SVD,Thu May  2 20:11:05 2024
+186074,"A Game of Thrones (A Song of Ice and Fire, #1)",ITEM-ITEM,Thu May  2 20:11:08 2024
+32542,The Summons,TFIDF,Thu May  2 20:12:04 2024
+17288661,The Summons,TFIDF,Thu May  2 20:12:04 2024
+32542,"The Target (Will Robie, #3)",ITEM-ITEM,Thu May  2 20:12:07 2024
+17288661,"The Target (Will Robie, #3)",ITEM-ITEM,Thu May  2 20:12:07 2024
+32542,"The Hit (Will Robie, #2)",ITEM-ITEM,Thu May  2 20:12:09 2024
+17288661,"The Hit (Will Robie, #2)",ITEM-ITEM,Thu May  2 20:12:09 2024
+32542,Ford County,TFIDF,Thu May  2 20:12:12 2024
+17288661,Ford County,TFIDF,Thu May  2 20:12:12 2024
+32542,The Pelican Brief,ITEM-ITEM,Thu May  2 20:12:13 2024
+17288661,The Pelican Brief,ITEM-ITEM,Thu May  2 20:12:13 2024
+32542,"The Brass Verdict (Harry Bosch, #14; Mickey Haller, #2; Harry Bosch Universe, #17)",ITEM-ITEM,Thu May  2 20:12:16 2024
+17288661,"The Brass Verdict (Harry Bosch, #14; Mickey Haller, #2; Harry Bosch Universe, #17)",ITEM-ITEM,Thu May  2 20:12:16 2024
+32542,The Chamber,ITEM-ITEM,Thu May  2 20:12:23 2024
+17288661,The Chamber,ITEM-ITEM,Thu May  2 20:12:23 2024
+32542,The Rainmaker,ITEM-ITEM,Thu May  2 20:12:25 2024
+17288661,The Rainmaker,ITEM-ITEM,Thu May  2 20:12:25 2024
+32542,The Last Juror,TFIDF,Thu May  2 20:12:30 2024
+17288661,The Last Juror,TFIDF,Thu May  2 20:12:30 2024
+32542,"The Drop (Harry Bosch, #17; Harry Bosch Universe, #21)",ITEM-ITEM,Thu May  2 20:12:32 2024
+17288661,"The Drop (Harry Bosch, #17; Harry Bosch Universe, #21)",ITEM-ITEM,Thu May  2 20:12:32 2024
+32542,"The Firm (Penguin Readers, Level 5)",ITEM-ITEM,Thu May  2 20:12:33 2024
+17288661,"The Firm (Penguin Readers, Level 5)",ITEM-ITEM,Thu May  2 20:12:33 2024
+32542,The Litigators,ITEM-ITEM,Thu May  2 20:12:36 2024
+17288661,The Litigators,ITEM-ITEM,Thu May  2 20:12:36 2024
+32542,The Client,ITEM-ITEM,Thu May  2 20:12:39 2024
+17288661,The Client,ITEM-ITEM,Thu May  2 20:12:39 2024
+32542,Born a Crime: Stories From a South African Childhood,SVD,Thu May  2 20:12:42 2024
+17288661,Born a Crime: Stories From a South African Childhood,SVD,Thu May  2 20:12:42 2024
+32542,"The Gods of Guilt (Mickey Haller, #5; Harry Bosch Universe, #23)",ITEM-ITEM,Thu May  2 20:13:27 2024
+17288661,"The Gods of Guilt (Mickey Haller, #5; Harry Bosch Universe, #23)",ITEM-ITEM,Thu May  2 20:13:27 2024
+32542,"Mr. Mercedes (Bill Hodges Trilogy, #1)",ITEM-ITEM,Thu May  2 20:13:45 2024
+17288661,"Mr. Mercedes (Bill Hodges Trilogy, #1)",ITEM-ITEM,Thu May  2 20:13:45 2024
+32542,"The Black Box (Harry Bosch, #18; Harry Bosch Universe, #22)",ITEM-ITEM,Thu May  2 20:13:49 2024
+17288661,"The Black Box (Harry Bosch, #18; Harry Bosch Universe, #22)",ITEM-ITEM,Thu May  2 20:13:49 2024
+32542,"The Burning Room (Harry Bosch, #19; Harry Bosch Universe, #26)",ITEM-ITEM,Thu May  2 20:13:51 2024
+17288661,"The Burning Room (Harry Bosch, #19; Harry Bosch Universe, #26)",ITEM-ITEM,Thu May  2 20:13:51 2024
+32542,"The Cuckoo's Calling (Cormoran Strike, #1)",ITEM-ITEM,Thu May  2 20:13:54 2024
+17288661,"The Cuckoo's Calling (Cormoran Strike, #1)",ITEM-ITEM,Thu May  2 20:13:54 2024
+32542,Fetching Raymond: A Ford County Story,TFIDF,Thu May  2 20:14:18 2024
+17288661,Fetching Raymond: A Ford County Story,TFIDF,Thu May  2 20:14:18 2024
+25899336,A Tree Grows in Brooklyn,ITEM-ITEM,Thu May  2 20:15:46 2024
+25899336,"Unbroken: A World War II Story of Survival, Resilience, and Redemption",ITEM-ITEM,Thu May  2 20:15:50 2024
+25899336,Hillbilly Elegy: A Memoir of a Family and Culture in Crisis,ITEM-ITEM,Thu May  2 20:15:56 2024
+25899336,Let's Take the Long Way Home: A Memoir of Friendship,TFIDF,Thu May  2 20:15:58 2024
+25899336,The Fault in Our Stars,ITEM-ITEM,Thu May  2 20:16:07 2024
+25899336,The Glass Castle,ITEM-ITEM,Thu May  2 20:16:17 2024
+25899336,The Immortal Life of Henrietta Lacks,ITEM-ITEM,Thu May  2 20:16:24 2024
+25899336,All the Light We Cannot See,ITEM-ITEM,Thu May  2 20:16:35 2024
+25899336,Born a Crime: Stories From a South African Childhood,ITEM-ITEM,Thu May  2 20:16:37 2024
+400354,Men at Arms: The Play,TFIDF,Thu May  2 20:18:21 2024
+400354,Coraline,ITEM-ITEM,Thu May  2 20:18:22 2024
+400354,"Unseen Academicals (Discworld, #37; Rincewind #8)",TFIDF,Thu May  2 20:18:25 2024
+400354,"Witches Abroad (Discworld, #12; Witches #3)",ITEM-ITEM,Thu May  2 20:18:26 2024
+400354,"Wyrd Sisters (Discworld, #6; Witches #2)",ITEM-ITEM,Thu May  2 20:18:28 2024
+400354,"I Shall Wear Midnight (Discworld, #38; Tiffany Aching, #4)",ITEM-ITEM,Thu May  2 20:18:29 2024
+400354,"Words of Radiance (The Stormlight Archive, #2)",SVD,Thu May  2 20:18:31 2024
+400354,"Harry Potter and the Goblet of Fire (Harry Potter, #4)",SVD,Thu May  2 20:18:32 2024
+400354,Interesting Times: The Play,TFIDF,Thu May  2 20:18:34 2024
+400354,"Guards! Guards! (Discworld, #8)",TFIDF,Thu May  2 20:18:38 2024
+400354,"Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch",ITEM-ITEM,Thu May  2 20:18:39 2024
+400354,"Howl's Moving Castle (Howl's Moving Castle, #1)",ITEM-ITEM,Thu May  2 20:18:42 2024
+400354,"The Fifth Elephant (Discworld, #24; City Watch, #5)",ITEM-ITEM,Thu May  2 20:18:43 2024
+400354,"Wintersmith (Discworld, #35; Tiffany Aching, #3)",ITEM-ITEM,Thu May  2 20:18:45 2024
+400354,"Going Postal (Discworld, #33; Moist von Lipwig, #1)",ITEM-ITEM,Thu May  2 20:18:46 2024
+400354,"The Way of Kings (The Stormlight Archive, #1)",SVD,Thu May  2 20:18:48 2024
+400354,"Eric (Discworld, #9; Rincewind #4)",TFIDF,Thu May  2 20:18:49 2024
+400354,"Snuff (Discworld, #39; City Watch #8)",TFIDF,Thu May  2 20:18:51 2024
+400354,"The Truth (Discworld, #25; Industrial Revolution, #2)",ITEM-ITEM,Thu May  2 20:18:52 2024
+400354,"Snuff (Discworld, #39; City Watch #8)",ITEM-ITEM,Thu May  2 20:18:53 2024
+400354,"Jingo (Discworld, #21; City Watch, #4)",ITEM-ITEM,Thu May  2 20:18:54 2024
+400354,"Lords and Ladies (Discworld, #14; Witches #4)",ITEM-ITEM,Thu May  2 20:18:55 2024
+400354,"The Truth (Discworld, #25; Industrial Revolution, #2)",TFIDF,Thu May  2 20:18:56 2024
+400354,"Interesting Times (Discworld, #17; Rincewind #5)",ITEM-ITEM,Thu May  2 20:18:58 2024
+400354,"Mort (Death, #1; Discworld, #4)",ITEM-ITEM,Thu May  2 20:18:59 2024
+400354,Guards! Guards!: The Play,TFIDF,Thu May  2 20:19:00 2024
+400354,"The Lord of the Rings (The Lord of the Rings, #1-3)",SVD,Thu May  2 20:19:02 2024
+400354,"The Wee Free Men (Discworld, #30; Tiffany Aching, #1)",ITEM-ITEM,Thu May  2 20:19:03 2024
+400354,Carpe Jugulum (Discworld #23; Witches #6),ITEM-ITEM,Thu May  2 20:19:04 2024
+400354,"Maskerade (Discworld, #18; Witches #5)",ITEM-ITEM,Thu May  2 20:19:05 2024
+400354,"Thud! (Discworld, #34; City Watch #7)",TFIDF,Thu May  2 20:19:07 2024
+400354,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Thu May  2 20:19:08 2024
+400354,"Small Gods (Discworld, #13)",ITEM-ITEM,Thu May  2 20:19:09 2024
+400354,"Hogfather (Discworld, #20; Death, #4)",ITEM-ITEM,Thu May  2 20:19:10 2024
+400354,"Raising Steam (Discworld, #40, Moist von Lipwig #3 )",TFIDF,Thu May  2 20:19:14 2024
+400354,"Night Watch (Discworld, #29; City Watch, #6)",ITEM-ITEM,Thu May  2 20:19:15 2024
+400354,"Guards! Guards! (Discworld, #8)",ITEM-ITEM,Thu May  2 20:19:17 2024
+400354,"A Hat Full of Sky (Discworld, #32; Tiffany Aching, #2)",ITEM-ITEM,Thu May  2 20:19:18 2024
+400354,"Thud! (Discworld, #34; City Watch #7)",ITEM-ITEM,Thu May  2 20:19:19 2024
+400354,"Harry Potter and the Philosopher's Stone (Harry Potter, #1)",SVD,Thu May  2 20:19:20 2024
+22055262,"Crown of Midnight (Throne of Glass, #2)",ITEM-ITEM,Thu May  2 20:20:17 2024
+22055262,"A Gathering of Shadows (Shades of Magic, #2)",TFIDF,Thu May  2 20:20:31 2024
+22055262,The Hunger Games Trilogy,TFIDF,Thu May  2 20:20:41 2024
+22055262,Jonathan Strange & Mr Norrell,TFIDF,Thu May  2 20:20:45 2024
+22055262,"This Savage Song (Monsters of Verity, #1)",ITEM-ITEM,Thu May  2 20:20:49 2024
+22055262,"Six of Crows (Six of Crows, #1)",ITEM-ITEM,Thu May  2 20:20:57 2024
+22055262,"A Gathering of Shadows (Shades of Magic, #2)",ITEM-ITEM,Thu May  2 20:21:24 2024
+22055262,"Vicious (Villains, #1)",ITEM-ITEM,Thu May  2 20:21:26 2024
+22055262,"Crooked Kingdom (Six of Crows, #2)",ITEM-ITEM,Thu May  2 20:21:28 2024
+22055262,"A Conjuring of Light (Shades of Magic, #3)",ITEM-ITEM,Thu May  2 20:21:31 2024
+22055262,"An Ember in the Ashes (An Ember in the Ashes, #1)",ITEM-ITEM,Thu May  2 20:21:39 2024
+22055262,"A Court of Mist and Fury (A Court of Thorns and Roses, #2)",ITEM-ITEM,Thu May  2 20:21:43 2024
+22055262,"A Conjuring of Light (Shades of Magic, #3)",TFIDF,Thu May  2 20:21:47 2024
+5907,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Thu May  2 20:22:57 2024
+5907,"The Lion, the Witch, and the Wardrobe (Chronicles of Narnia, #1)",ITEM-ITEM,Thu May  2 20:23:00 2024
+5907,The Secret Garden,ITEM-ITEM,Thu May  2 20:23:01 2024
+5907,Uprooted,ITEM-ITEM,Thu May  2 20:23:02 2024
+5907,"The Return of the King (The Lord of the Rings, #3)",ITEM-ITEM,Thu May  2 20:23:03 2024
+5907,"The Name of the Wind (The Kingkiller Chronicle, #1)",ITEM-ITEM,Thu May  2 20:23:04 2024
+5907,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",ITEM-ITEM,Thu May  2 20:23:05 2024
+5907,"A Game of Thrones (A Song of Ice and Fire, #1)",ITEM-ITEM,Thu May  2 20:23:07 2024
+5907,Roverandom,TFIDF,Thu May  2 20:23:12 2024
+5907,"The Fellowship of the Ring (The Lord of the Rings, #1)",ITEM-ITEM,Thu May  2 20:23:14 2024
+5907,"Words of Radiance (The Stormlight Archive, #2)",SVD,Thu May  2 20:23:15 2024
+5907,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",ITEM-ITEM,Thu May  2 20:23:18 2024
+5907,"Harry Potter and the Order of the Phoenix (Harry Potter, #5)",ITEM-ITEM,Thu May  2 20:23:18 2024
+5907,"A Storm of Swords (A Song of Ice and Fire, #3)",ITEM-ITEM,Thu May  2 20:23:20 2024
+5907,"The Fellowship of the Ring (The Lord of the Rings, #1)",TFIDF,Thu May  2 20:23:21 2024
+5907,"Harry Potter and the Goblet of Fire (Harry Potter, #4)",ITEM-ITEM,Thu May  2 20:23:22 2024
+5907,"The Way of Kings (The Stormlight Archive, #1)",SVD,Thu May  2 20:23:23 2024
+5907,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",ITEM-ITEM,Thu May  2 20:23:24 2024
+5907,The Ocean at the End of the Lane,ITEM-ITEM,Thu May  2 20:23:26 2024
+5907,Alice in Wonderland,ITEM-ITEM,Thu May  2 20:23:27 2024
+5907,"The History of the Hobbit, Part One: Mr. Baggins",TFIDF,Thu May  2 20:23:30 2024
+5907,"The Lord of the Rings (The Lord of the Rings, #1-3)",ITEM-ITEM,Thu May  2 20:23:32 2024
+5907,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",ITEM-ITEM,Thu May  2 20:23:33 2024
+5907,"The Lord of the Rings (The Lord of the Rings, #1-3)",SVD,Thu May  2 20:23:36 2024
+5907,The Martian,ITEM-ITEM,Thu May  2 20:23:39 2024
+5907,The Hobbit: Graphic Novel,TFIDF,Thu May  2 20:23:44 2024
+5907,"Harry Potter and the Goblet of Fire (Harry Potter, #4)",SVD,Thu May  2 20:23:47 2024
+5907,"Anne of Green Gables (Anne of Green Gables, #1)",ITEM-ITEM,Thu May  2 20:23:48 2024
+5907,"The Hunger Games (The Hunger Games, #1)",ITEM-ITEM,Thu May  2 20:23:53 2024
+5907,"Firefight (The Reckoners, #2)",TFIDF,Thu May  2 20:23:58 2024
+5907,J.R.R. Tolkien 4-Book Boxed Set: The Hobbit and The Lord of the Rings,TFIDF,Thu May  2 20:23:59 2024
+5907,"The Two Towers (The Lord of the Rings, #2)",ITEM-ITEM,Thu May  2 20:24:00 2024
+5907,"Harry Potter and the Philosopher's Stone (Harry Potter, #1)",SVD,Thu May  2 20:24:03 2024
+5907,Alice's Adventures in Wonderland and Through the Looking Glass,TFIDF,Thu May  2 20:24:04 2024
+23437156,"The Raven Boys (The Raven Cycle, #1)",ITEM-ITEM,Thu May  2 20:25:04 2024
+23437156,"Crooked Kingdom (Six of Crows, #2)",ITEM-ITEM,Thu May  2 20:25:08 2024
+23437156,"A Court of Mist and Fury (A Court of Thorns and Roses, #2)",ITEM-ITEM,Thu May  2 20:25:10 2024
+23437156,"A Memory of Light (Wheel of Time, #14)",SVD,Thu May  2 20:25:15 2024
+23437156,"A Court of Thorns and Roses (A Court of Thorns and Roses, #1)",ITEM-ITEM,Thu May  2 20:25:28 2024
+23437156,"A Conjuring of Light (Shades of Magic, #3)",ITEM-ITEM,Thu May  2 20:25:32 2024
+23437156,"Shadow and Bone (The Grisha, #1)",ITEM-ITEM,Thu May  2 20:25:35 2024
+23437156,"Vicious (Villains, #1)",ITEM-ITEM,Thu May  2 20:25:39 2024
+23437156,"Ruin and Rising (The Grisha, #3)",ITEM-ITEM,Thu May  2 20:25:47 2024
+23437156,"Crooked Kingdom (Six of Crows, #2)",TFIDF,Thu May  2 20:25:55 2024
+23437156,"Queen of Shadows (Throne of Glass, #4)",ITEM-ITEM,Thu May  2 20:26:05 2024
+23437156,"A Darker Shade of Magic (Shades of Magic, #1)",ITEM-ITEM,Thu May  2 20:26:10 2024
+23437156,"An Ember in the Ashes (An Ember in the Ashes, #1)",ITEM-ITEM,Thu May  2 20:26:11 2024
+23437156,"Crown of Midnight (Throne of Glass, #2)",ITEM-ITEM,Thu May  2 20:26:14 2024
+23437156,"A Gathering of Shadows (Shades of Magic, #2)",ITEM-ITEM,Thu May  2 20:26:16 2024
+5096,The Dark Tower,ITEM-ITEM,Thu May  2 20:27:19 2024
+43615,The Dark Tower,ITEM-ITEM,Thu May  2 20:27:19 2024
+5096,"Miss Peregrine’s Home for Peculiar Children (Miss Peregrine’s Peculiar Children, #1)",ITEM-ITEM,Thu May  2 20:27:20 2024
+43615,"Miss Peregrine’s Home for Peculiar Children (Miss Peregrine’s Peculiar Children, #1)",ITEM-ITEM,Thu May  2 20:27:20 2024
+5096,The Graveyard Book,ITEM-ITEM,Thu May  2 20:27:22 2024
+43615,The Graveyard Book,ITEM-ITEM,Thu May  2 20:27:22 2024
+5096,The Gunslinger,ITEM-ITEM,Thu May  2 20:27:26 2024
+43615,The Gunslinger,ITEM-ITEM,Thu May  2 20:27:26 2024
+5096,The Waste Lands,ITEM-ITEM,Thu May  2 20:27:27 2024
+43615,The Waste Lands,ITEM-ITEM,Thu May  2 20:27:27 2024
+5096,The Dark Tower: The Gunslinger - The Journey Begins,TFIDF,Thu May  2 20:27:31 2024
+43615,The Dark Tower: The Gunslinger - The Journey Begins,TFIDF,Thu May  2 20:27:31 2024
+5096,Misery,ITEM-ITEM,Thu May  2 20:27:33 2024
+43615,Misery,ITEM-ITEM,Thu May  2 20:27:33 2024
+5096,The Drawing of the Three,ITEM-ITEM,Thu May  2 20:27:35 2024
+43615,The Drawing of the Three,ITEM-ITEM,Thu May  2 20:27:35 2024
+5096,The Dark Tower: The Long Road Home,TFIDF,Thu May  2 20:27:37 2024
+43615,The Dark Tower: The Long Road Home,TFIDF,Thu May  2 20:27:37 2024
+5096,The Dark Tower: Battle of Jericho Hill,TFIDF,Thu May  2 20:27:41 2024
+43615,The Dark Tower: Battle of Jericho Hill,TFIDF,Thu May  2 20:27:41 2024
+5096,Wolves of the Calla,ITEM-ITEM,Thu May  2 20:27:44 2024
+43615,Wolves of the Calla,ITEM-ITEM,Thu May  2 20:27:44 2024
+5096,"Harry Potter and the Philosopher's Stone (Harry Potter, #1)",SVD,Thu May  2 20:27:45 2024
+43615,"Harry Potter and the Philosopher's Stone (Harry Potter, #1)",SVD,Thu May  2 20:27:45 2024
+5096,The Dark Tower: The Gunslinger Born,TFIDF,Thu May  2 20:27:52 2024
+43615,The Dark Tower: The Gunslinger Born,TFIDF,Thu May  2 20:27:52 2024
+5096,The Drawing of the Three,TFIDF,Thu May  2 20:28:03 2024
+43615,The Drawing of the Three,TFIDF,Thu May  2 20:28:03 2024
+5096,The Improbable Adventures of Sherlock Holmes,TFIDF,Thu May  2 20:28:04 2024
+43615,The Improbable Adventures of Sherlock Holmes,TFIDF,Thu May  2 20:28:04 2024
+5096,"Preludes & Nocturnes (The Sandman, #1)",TFIDF,Thu May  2 20:28:10 2024
+43615,"Preludes & Nocturnes (The Sandman, #1)",TFIDF,Thu May  2 20:28:10 2024
+5096,'Salem's Lot,ITEM-ITEM,Thu May  2 20:28:12 2024
+43615,'Salem's Lot,ITEM-ITEM,Thu May  2 20:28:12 2024
+5096,The Little Sisters of Eluria,TFIDF,Thu May  2 20:28:15 2024
+43615,The Little Sisters of Eluria,TFIDF,Thu May  2 20:28:15 2024
+5096,Song of Susannah,ITEM-ITEM,Thu May  2 20:28:16 2024
+43615,Song of Susannah,ITEM-ITEM,Thu May  2 20:28:16 2024
+5096,The Stand,ITEM-ITEM,Thu May  2 20:28:18 2024
+43615,The Stand,ITEM-ITEM,Thu May  2 20:28:18 2024
+5096,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Thu May  2 20:28:30 2024
+43615,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Thu May  2 20:28:30 2024
+6294,"House of Many Ways (Howl's Moving Castle, #3)",TFIDF,Thu May  2 20:29:31 2024
+6294,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",ITEM-ITEM,Thu May  2 20:29:33 2024
+6294,"Harry Potter and the Prisoner of Azkaban (Harry Potter, #3)",ITEM-ITEM,Thu May  2 20:29:35 2024
+6294,"Harry Potter and the Philosopher's Stone (Harry Potter, #1)",SVD,Thu May  2 20:29:39 2024
+6294,The Little Prince,ITEM-ITEM,Thu May  2 20:29:43 2024
+6294,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",ITEM-ITEM,Thu May  2 20:29:47 2024
+6294,The Book Thief,ITEM-ITEM,Thu May  2 20:30:00 2024
+6294,"The Lion, the Witch, and the Wardrobe (Chronicles of Narnia, #1)",ITEM-ITEM,Thu May  2 20:30:12 2024
+6294,"The Worst Witch (Worst Witch, #1)",TFIDF,Thu May  2 20:30:20 2024
+6294,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Thu May  2 20:30:26 2024
+6294,The Princess Bride,ITEM-ITEM,Thu May  2 20:30:32 2024
+6294,"The Battle of the Labyrinth (Percy Jackson and the Olympians, #4)",ITEM-ITEM,Thu May  2 20:30:38 2024
+6294,"The Lightning Thief (Percy Jackson and the Olympians, #1)",ITEM-ITEM,Thu May  2 20:30:43 2024
+6294,"The Sea of Monsters (Percy Jackson and the Olympians, #2)",ITEM-ITEM,Thu May  2 20:30:44 2024
+6294,"Keeper of the Lost Cities (Keeper of the Lost Cities, #1)",TFIDF,Thu May  2 20:30:59 2024
+29780253,"Unbroken: A World War II Story of Survival, Resilience, and Redemption",ITEM-ITEM,Thu May  2 20:32:27 2024
+29780253,Between Shades of Gray,ITEM-ITEM,Thu May  2 20:32:41 2024
+29780253,Never Have Your Dog Stuffed: And Other Things I've Learned,TFIDF,Thu May  2 20:32:56 2024
+29780253,As You Wish: Inconceivable Tales from the Making of The Princess Bride,SVD,Thu May  2 20:33:22 2024
+29780253,The Absolutely True Diary of a Part-Time Indian,ITEM-ITEM,Thu May  2 20:33:41 2024
+29780253,Long Walk to Freedom,TFIDF,Thu May  2 20:33:47 2024
+9361589,"Daughter of Smoke & Bone (Daughter of Smoke & Bone, #1)",ITEM-ITEM,Thu May  2 20:34:51 2024
+9361589,"Ruin and Rising (The Grisha, #3)",ITEM-ITEM,Thu May  2 20:35:01 2024
+9361589,The Ocean at the End of the Lane,ITEM-ITEM,Thu May  2 20:35:05 2024
+9361589,The Graveyard Book,ITEM-ITEM,Thu May  2 20:35:18 2024
+9361589,"The Name of the Wind (The Kingkiller Chronicle, #1)",ITEM-ITEM,Thu May  2 20:35:23 2024
+9361589,"Siege and Storm (The Grisha, #2)",ITEM-ITEM,Thu May  2 20:35:36 2024
+21,The Immortal Life of Henrietta Lacks,ITEM-ITEM,Thu May  2 20:36:56 2024
+21,At Home: A Short History of Private Life,ITEM-ITEM,Thu May  2 20:37:02 2024
+21,"Unbroken: A World War II Story of Survival, Resilience, and Redemption",ITEM-ITEM,Thu May  2 20:37:15 2024
+28449207,"Crooked Kingdom (Six of Crows, #2)",ITEM-ITEM,Thu May  2 20:38:04 2024
+28449207,"Days of Blood & Starlight (Daughter of Smoke & Bone, #2)",ITEM-ITEM,Thu May  2 20:38:14 2024
+28449207,"Six of Crows (Six of Crows, #1)",ITEM-ITEM,Thu May  2 20:38:22 2024
+28449207,"A Gathering of Shadows (Shades of Magic, #2)",ITEM-ITEM,Thu May  2 20:38:30 2024
+28449207,"A Conjuring of Light (Shades of Magic, #3)",ITEM-ITEM,Thu May  2 20:38:51 2024
+18007564,11/22/63,ITEM-ITEM,Thu May  2 20:40:45 2024
+18007564,The Ocean at the End of the Lane,ITEM-ITEM,Thu May  2 20:41:09 2024
+32620332,Just One Look,TFIDF,Thu May  2 20:42:31 2024
+32620332,The Royal We,ITEM-ITEM,Thu May  2 20:42:42 2024
+32620332,One True Loves,ITEM-ITEM,Thu May  2 20:43:00 2024
+32620332,One True Loves,TFIDF,Thu May  2 20:43:09 2024
+32620332,"Me Before You (Me Before You, #1)",ITEM-ITEM,Thu May  2 20:43:19 2024
+32620332,All the Bright Places,ITEM-ITEM,Thu May  2 20:43:39 2024
+32620332,The Nightingale,ITEM-ITEM,Thu May  2 20:43:43 2024
+32620332,The Nightingale,SVD,Thu May  2 20:43:47 2024
+11250317,"The Way of Kings (The Stormlight Archive, #1)",SVD,Thu May  2 20:45:16 2024
+11250317,"A Memory of Light (Wheel of Time, #14)",SVD,Thu May  2 20:45:18 2024
+11250317,"Heir of Fire (Throne of Glass, #3)",ITEM-ITEM,Thu May  2 20:45:42 2024
+11250317,"Kings Rising (Captive Prince, #3)",ITEM-ITEM,Thu May  2 20:45:53 2024
+11250317,"Words of Radiance (The Stormlight Archive, #2)",SVD,Thu May  2 20:46:30 2024
+29430012,"The Big Sleep (Philip Marlowe, #1)",TFIDF,Thu May  2 20:47:59 2024
+29430012,The Summer Before the War,ITEM-ITEM,Thu May  2 20:48:14 2024
+29430012,The Lake House,ITEM-ITEM,Thu May  2 20:48:26 2024
+29430012,News of the World,ITEM-ITEM,Thu May  2 20:48:33 2024
+29430012,The Book Thief,ITEM-ITEM,Thu May  2 20:48:40 2024
+29430012,Hillbilly Elegy: A Memoir of a Family and Culture in Crisis,ITEM-ITEM,Thu May  2 20:48:42 2024
+29430012,Life After Life,ITEM-ITEM,Thu May  2 20:48:47 2024
+29430012,Rules of Civility,ITEM-ITEM,Thu May  2 20:48:51 2024
+29430012,The Immortal Life of Henrietta Lacks,ITEM-ITEM,Thu May  2 20:49:13 2024
+29430012,As You Wish: Inconceivable Tales from the Making of The Princess Bride,SVD,Thu May  2 20:49:29 2024
+10644930,NOS4A2,ITEM-ITEM,Thu May  2 20:50:27 2024
+10644930,The Ocean at the End of the Lane,ITEM-ITEM,Thu May  2 20:50:31 2024
+10644930,"Midnight Crossroad (Midnight, Texas, #1)",TFIDF,Thu May  2 20:50:44 2024
+100915,"Harry Potter and the Sorcerer's Stone (Harry Potter, #1)",ITEM-ITEM,Thu May  2 20:52:37 2024
+100915,The Secret Garden,ITEM-ITEM,Thu May  2 20:52:40 2024
+100915,"The Voyage of the Dawn Treader (Chronicles of Narnia, #3)",TFIDF,Thu May  2 20:52:43 2024
+100915,"Words of Radiance (The Stormlight Archive, #2)",SVD,Thu May  2 20:52:46 2024
+100915,"The Hunger Games (The Hunger Games, #1)",ITEM-ITEM,Thu May  2 20:52:48 2024
+100915,"Harry Potter and the Half-Blood Prince (Harry Potter, #6)",ITEM-ITEM,Thu May  2 20:52:51 2024
+100915,"The Magician's Nephew (Chronicles of Narnia, #6)",ITEM-ITEM,Thu May  2 20:53:10 2024
+100915,"The Silver Chair (Chronicles of Narnia, #4)",ITEM-ITEM,Thu May  2 20:53:12 2024
+100915,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",ITEM-ITEM,Thu May  2 20:53:13 2024
+100915,"Harry Potter and the Goblet of Fire (Harry Potter, #4)",SVD,Thu May  2 20:53:15 2024
+100915,"The Return of the King (The Lord of the Rings, #3)",ITEM-ITEM,Thu May  2 20:53:16 2024
+100915,"The Son of Neptune (The Heroes of Olympus, #2)",ITEM-ITEM,Thu May  2 20:53:19 2024
+100915,"The Battle of the Labyrinth (Percy Jackson and the Olympians, #4)",ITEM-ITEM,Thu May  2 20:53:21 2024
+100915,"The Way of Kings (The Stormlight Archive, #1)",SVD,Thu May  2 20:53:22 2024
+100915,"The Lion, the Witch and the Wardrobe (Chronicles of Narnia, #1)",TFIDF,Thu May  2 20:53:24 2024
+100915,"The Voyage of the Dawn Treader (Chronicles of Narnia, #3)",ITEM-ITEM,Thu May  2 20:53:28 2024
+100915,"The Voyage of the """"""""""""""""Dawn Treader"""""""""""""""" (The Chronicles of Narnia, #3)",TFIDF,Thu May  2 20:53:29 2024
+100915,"Anne of Green Gables (Anne of Green Gables, #1)",ITEM-ITEM,Thu May  2 20:53:36 2024
+100915,"Harry Potter and the Philosopher's Stone (Harry Potter, #1)",SVD,Thu May  2 20:53:37 2024
+100915,"The Horse and His Boy (Chronicles of Narnia, #5)",TFIDF,Thu May  2 20:53:39 2024
+100915,The Hobbit,ITEM-ITEM,Thu May  2 20:53:40 2024
+100915,"The Horse and His Boy (Chronicles of Narnia, #5)",ITEM-ITEM,Thu May  2 20:53:42 2024
+100915,"Harry Potter and the Deathly Hallows (Harry Potter, #7)",SVD,Thu May  2 20:53:43 2024
+100915,"The Mark of Athena (The Heroes of Olympus, #3)",ITEM-ITEM,Thu May  2 20:53:44 2024
+100915,"The Lord of the Rings (The Lord of the Rings, #1-3)",SVD,Thu May  2 20:53:46 2024
+100915,"The Chronicles of Narnia (Chronicles of Narnia, #1-7)",TFIDF,Thu May  2 20:53:48 2024
+100915,"Catching Fire (The Hunger Games, #2)",ITEM-ITEM,Thu May  2 20:53:51 2024
+100915,The Princess Bride,ITEM-ITEM,Thu May  2 20:53:54 2024
+100915,"The Silver Chair (Chronicles of Narnia, #4)",TFIDF,Thu May  2 20:53:56 2024
+100915,"The Magician's Nephew (Chronicles of Narnia, #6)",TFIDF,Thu May  2 20:53:58 2024
+100915,"Harry Potter and the Chamber of Secrets (Harry Potter, #2)",ITEM-ITEM,Thu May  2 20:54:00 2024
+100915,"The Lightning Thief (Percy Jackson and the Olympians, #1)",ITEM-ITEM,Thu May  2 20:54:02 2024
+100915,"The Last Battle (The Chronicles of Narnia, #7)",TFIDF,Thu May  2 20:54:08 2024
+100915,"Prince Caspian (Chronicles of Narnia, #2)",ITEM-ITEM,Thu May  2 20:54:14 2024
+4692,The Book Thief,ITEM-ITEM,Thu May  2 20:55:14 2024
+4692,And the Mountains Echoed,ITEM-ITEM,Thu May  2 20:55:18 2024
+4692,Neverwhere,ITEM-ITEM,Thu May  2 20:55:25 2024
+4692,"Good Omens: The Nice and Accurate Prophecies of Agnes Nutter, Witch",ITEM-ITEM,Thu May  2 20:55:35 2024
+4692,"Written in My Own Heart's Blood (Outlander, #8)",ITEM-ITEM,Thu May  2 20:55:39 2024
+4692,The Secret Chord,ITEM-ITEM,Thu May  2 20:55:53 2024
+4692,The Hobbit,ITEM-ITEM,Thu May  2 20:55:59 2024
+4692,Half of a Yellow Sun,ITEM-ITEM,Thu May  2 20:56:03 2024
+4692,The Stand,ITEM-ITEM,Thu May  2 20:56:31 2024
+4692,Caleb's Crossing,ITEM-ITEM,Thu May  2 20:56:55 2024
+4692,Rules of Civility,ITEM-ITEM,Thu May  2 20:57:08 2024
+543495,The Ultimate Hitchhiker's Guide to the Galaxy,ITEM-ITEM,Thu May  2 20:57:44 2024
+543495,Heidi,ITEM-ITEM,Thu May  2 20:57:52 2024
+543495,The Littlest Angel,TFIDF,Thu May  2 20:58:05 2024
+543495,The Heart and the Bottle,TFIDF,Thu May  2 20:58:38 2024
+543495,The Magician's Elephant,ITEM-ITEM,Thu May  2 20:59:34 2024
+543495,"The Candymakers (The Candymakers, #1)",ITEM-ITEM,Thu May  2 20:59:50 2024
+543495,The Wind in the Willows,ITEM-ITEM,Thu May  2 21:00:21 2024
+30597,Atonement,ITEM-ITEM,Thu May  2 21:05:04 2024
+30597,The Nightingale,SVD,Thu May  2 21:05:25 2024
+30597,Wuthering Heights,ITEM-ITEM,Thu May  2 21:05:28 2024
+34,"The Name of the Wind (The Kingkiller Chronicle, #1)",TFIDF,Mon May  6 20:12:02 2024
+1215032,"The Name of the Wind (The Kingkiller Chronicle, #1)",TFIDF,Mon May  6 20:12:02 2024
+64222,"The Name of the Wind (The Kingkiller Chronicle, #1)",TFIDF,Mon May  6 20:12:02 2024
+34,The Slow Regard of Silent Things (The Kingkiller Chronicle #2.5),TFIDF,Mon May  6 20:12:04 2024
+1215032,The Slow Regard of Silent Things (The Kingkiller Chronicle #2.5),TFIDF,Mon May  6 20:12:04 2024
+64222,The Slow Regard of Silent Things (The Kingkiller Chronicle #2.5),TFIDF,Mon May  6 20:12:04 2024

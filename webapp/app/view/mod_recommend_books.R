@@ -65,6 +65,7 @@ ui <- function(id) {
 server <- function(id, ratings_tab, SVD_model, corp_dfm, item_item_df, query_book_ids, data_tab, how_many, simil_metrics, method = "SVD") {
   moduleServer(id, function(input, output, session) {
     book_recommends_tab <- reactiveVal()
+    liked_book <- reactiveVal()
     
     observeEvent(input$get_recommend_btn, {
       gargoyle::trigger("start_recommend_event")
@@ -102,18 +103,23 @@ server <- function(id, ratings_tab, SVD_model, corp_dfm, item_item_df, query_boo
       waiter$hide()
     })
 
-    observeEvent(input$myval, {
-      req(input$myval)
-      record <- input$myval
+    observeEvent(input$fav_book, {
+      req(input$fav_book)
+      record <- input$fav_book
       record_row <- data.table(
         query_book_id = query_book_ids(),
         recommended_title = record$title,
         model = record$model,
         datetime = date()
       )
-      fwrite(record_row, "system_recommendations_log.csv", append = TRUE)
+      liked_book(record_row)
       
-    })
+    }, ignoreInit = TRUE)
+    
+    observeEvent(liked_book(), {
+      req(liked_book())
+      fwrite(liked_book(), "system_recommendations_log.csv", append = TRUE)
+    }, ignoreInit = TRUE)
     
     output$bookCardsOutput <- renderUI({
       req(book_recommends_tab())

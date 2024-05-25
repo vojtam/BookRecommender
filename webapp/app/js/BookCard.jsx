@@ -57,12 +57,12 @@ export default function BookCard({ title, author_name, avg_rating, genres, descr
         height={34}
         active={active}
         onClick={() => {
-          Shiny.setInputValue("app-recommend_books-myval", {
+          Shiny.setInputValue("app-recommend_books-fav_book", {
             title: title,
             model: model,
-            genres: genres
+            genres: genres,
           })
-          console.log()
+          console.log("logging")
           setActive(!active)} 
         }
       />

@@ -100,14 +100,7 @@ get_recommendations <- function(corp_dfm, data_tab, query_book_ids, genres, simi
   as.data.frame()
   setorderv(tstat, cols = c(simil_method), order = -1)
   recommendations <- parse_recommendations(tstat[1:how_many,]$document2, data_tab, "TFIDF")
-  # recommendations <- data_tab |> 
-  #   filter(
-  #     title %in% docvars(dfm_subset(rest_dfm, docname_ %in% tstat[1:how_many,]$document2))$title
-  #   ) |>
-  #   select(
-  #     title, average_rating, description, url, image_url, genres, author_name
-  #   )
-  # recommendations$model <- "TFIDF"
+
   return(recommendations)
 }
 
